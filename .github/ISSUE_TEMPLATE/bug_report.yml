@@ -1,0 +1,44 @@
+name: 🐛 Hata Bildirimi (Bug Report)
+description: Karşılaştığınız bir hatayı veya beklenmeyen davranışı bildirin.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hata bildirdiğiniz için teşekkür ederiz! Lütfen sorunu çözmemize yardımcı olmak için aşağıdaki alanları doldurun.
+  - type: input
+    id: environment
+    attributes:
+      label: İşletim Sistemi ve Sürüm
+      description: Örn. Windows 11 64-bit, Edge WebView2 kurulu
+      placeholder: Windows 11 Pro 23H2
+    validations:
+      required: true
+  - type: dropdown
+    id: app_mode
+    attributes:
+      label: Uygulama Modu
+      options:
+        - "Masaüstü EXE (RandomOffice.exe)"
+        - "Web Tarayıcı Modu (FastAPI / localhost:8000)"
+        - "CLI / Python doğrudan çalıştırma"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Hatanın Açıklaması
+      description: Ne oldu ve ne olmasını bekliyordunuz?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Yeniden Üretim Adımları
+      description: Hatayı yeniden tetiklemek için gereken adımlar
+      placeholder: |
+        1. Word düzenleyicisinde tablo oluşturun
+        2. Hücreye metin yazın
+        3. Kaydet'e tıklayın
+    validations:
+      required: true

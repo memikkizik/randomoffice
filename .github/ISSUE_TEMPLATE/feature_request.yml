@@ -1,0 +1,27 @@
+name: 💡 Yeni Özellik Talebi (Feature Request)
+description: RandomOffice için yeni bir özellik veya iyileştirme önerin.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Öneriniz için teşekkürler! Lütfen fikrinizi olabildiğince açık tanımlayın.
+  - type: dropdown
+    id: component
+    attributes:
+      label: İlgili Bileşen
+      options:
+        - "Word Editörü (.docx)"
+        - "Excel Hesap Tablosu (.xlsx)"
+        - "PowerPoint Sunumu (.pptx)"
+        - "Masaüstü Entegrasyonu & Windows Özellikleri"
+        - "Dönüştürme ve API Motoru"
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Önerilen Özellik
+      description: Bu özellik nasıl çalışmalı ve kullanıcılara ne fayda sağlamalı?
+    validations:
+      required: true

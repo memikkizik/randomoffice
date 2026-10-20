@@ -2,6 +2,7 @@
 
 > **Microsoft 365 veya Office abonelik ücreti ödemeden; Word (`.docx`), Excel (`.xlsx`) ve PowerPoint (`.pptx`) belgelerinizi doğrudan masaüstü uygulamasında veya web tarayıcınızda açın, düzenleyin, formülleri hesaplayın, slayt gösterisi yapın ve kaydedin!**
 
+[![CI](https://github.com/memikkizik/randomoffice/actions/workflows/ci.yml/badge.svg)](https://github.com/memikkizik/randomoffice/actions/workflows/ci.yml)
 [![Web Office Suite](https://img.shields.io/badge/Office%20Suite-Word%20%7C%20Excel%20%7C%20PowerPoint-0078d4.svg)]()
 [![Desktop Engine](https://img.shields.io/badge/Desktop-Native%20Edge%20WebView2-blue.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -84,6 +85,36 @@ Günümüzde Microsoft Office belgelerini (`.docx`, `.xlsx`, `.pptx`) açıp üz
 
 ---
 
+## ⚖️ Karşılaştırma Tablosu (Neden RandomOffice?)
+
+| Kriter | 🏢 RandomOffice | 💼 Microsoft 365 | 🐧 LibreOffice | 🌐 Google Docs |
+| :--- | :---: | :---: | :---: | :---: |
+| **Fiyat** | **%100 Ücretsiz** | Yıllık 2.000+ ₺ | Ücretsiz | Ücretsiz |
+| **Gizlilik & Telemetri** | **Sıfır Veri Toplama** | Bulut telemetrisi | Yerel | Google bulut kaydı |
+| **Hesap / Abonelik** | **Zorunsuz** | Zorunlu | Zorunsuz | Google hesabı |
+| **Kurulum Boyutu** | **~25 MB (Tek EXE)** | 4 - 8 GB | ~550 MB | Yalnızca web |
+| **Açılış Hızı** | **Anında (WebView2)** | Ağır yükleme | Yavaş başlatma | İnternet bağımlı |
+| **Modern Fluent UI** | **Evet (Fluent 2.0)** | Evet | Eski arayüz | Basit web |
+| **Yerel Sıfır-Soket** | **Evet (Sıfır Port)** | Hayır | Hayır | Hayır |
+
+---
+
+## ⌨️ Hızlı Klavye Kısayolları
+
+| Kısayol | İşlev | Geçerli Uygulama |
+| :--- | :--- | :--- |
+| <kbd>Ctrl</kbd> + <kbd>S</kbd> | Belgeyi yerinde / farklı kaydet | Tümü |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd> | Canlı A4 yazdırma önizlemesi ve yazdır | Tümü |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Seçili metni kalın yap | Word |
+| <kbd>Ctrl</kbd> + <kbd>I</kbd> | Seçili metni italik yap | Word |
+| <kbd>Ctrl</kbd> + <kbd>U</kbd> | Seçili metnin altını çiz | Word |
+| <kbd>F5</kbd> | Baştan tam ekran slayt gösterisi başlat | PowerPoint |
+| <kbd>Esc</kbd> | Slayt gösterisinden çık | PowerPoint |
+| <kbd>→</kbd> / <kbd>←</kbd> | Sonraki / Önceki slayda geç | PowerPoint |
+| <kbd>Enter</kbd> / <kbd>Tab</kbd> | Hücre girişini onayla ve yana/aşağı kay | Excel |
+
+---
+
 ## 🚀 Başlatma ve Kullanım
 
 ### 1. Masaüstü Uygulaması Olarak Çalıştırma (Önerilen)
@@ -138,3 +169,14 @@ powershell -ExecutionPolicy Bypass -File scripts/check_project.ps1 -Scope All
 - **Gizli API veya Sızıntı Riski Yok:** Kod tabanı hiçbir gizli API anahtarı, kişisel veri veya arka kapı içermez. MIT lisansı ile halka açıktır.
 - **İnternet Bağımsız:** İnternet bağlantınız olmasa bile tüm masaüstü ofis özellikleri eksiksiz çalışır.
 - **Güvenlik Duvarı Engeli Yok:** Yerel ağ dinlemesi yapmadan doğrudan in-process WebView2 motoruyla açılır.
+
+---
+
+## 🤝 Katkıda Bulunma ve Topluluk Standartları
+
+RandomOffice topluluğuna katılmak, katkıda bulunmak ve güvenlik bildiriminde bulunmak için:
+
+- [**CONTRIBUTING.md**](CONTRIBUTING.md) — Geliştirme ortamı kurulumu ve çekme isteği (PR) kılavuzu.
+- [**SECURITY.md**](SECURITY.md) — Sorumlu ifşa güvenlik politikası ve iletişim adresi.
+- [**CODE_OF_CONDUCT.md**](CODE_OF_CONDUCT.md) — Katılımcı nezaket ve davranış kuralları.
+- [**LICENSE**](LICENSE) — Resmi MIT Açık Kaynak Lisansı.
