@@ -1,11 +1,50 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+
+# Environments and dependencies
 .venv/
-.pytest_cache/
+env/
+venv/
+ENV/
+*.lock
+
+# Build & distribution outputs
 dist/
 build/
-*.lock
+*.spec.bak
+randomoffice/static/downloads/*.zip
+*.exe
+*.zip
+*.tar.gz
+*.msi
+
+# Testing & quality
+.pytest_cache/
+.coverage
+htmlcov/
+artifacts/
+
+# Local data & temporary caches
 uploads/
 monitored/
+*.tmp
+*.log
+
+# Sensitive environment files
+.env
+.env.*
+!.env.example
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

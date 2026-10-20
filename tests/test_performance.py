@@ -1,4 +1,3 @@
-import io
 from pathlib import Path
 import zipfile
 
@@ -72,4 +71,3 @@ def test_document_cache_invalidation_and_clear() -> None:
     cache.set("k2", "v2")
     cache.clear()
     assert len(cache) == 0
-

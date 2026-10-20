@@ -15,3 +15,4 @@ else
     echo "Using uv run..."
     exec uv run uvicorn randomoffice.api.app:app --host "${HOST}" --port "${PORT}"
 fi
+

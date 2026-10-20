@@ -26,8 +26,9 @@ class DocxConverter:
         self,
         source_path: Path,
         target: ConversionTarget,
-        options: dict[str, Any] | None = None,
+        _options: dict[str, Any] | None = None,
     ) -> ConvertedOutput:
+        _ = _options
         try:
             from docx import Document
             from docx.table import Table
@@ -241,6 +242,7 @@ class PptxConverter:
         target: ConversionTarget,
         options: dict[str, Any] | None = None,
     ) -> ConvertedOutput:
+        _ = options
         try:
             from pptx import Presentation
         except ImportError as exc:
@@ -410,4 +412,3 @@ class ConversionPipeline:
             self.cache.set(cache_key, result)
 
         return result
-

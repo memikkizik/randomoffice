@@ -2,7 +2,6 @@ from pathlib import Path
 from docx import Document
 from openpyxl import Workbook
 from pptx import Presentation
-import pytest
 
 from randomoffice.converters.contracts import ConversionTarget
 from randomoffice.converters.pipeline import (
@@ -94,4 +93,3 @@ def test_conversion_pipeline_with_caching(tmp_path: Path) -> None:
     # Second call should fetch from cache
     res2 = pipeline.convert(doc_path, ConversionTarget.TEXT, use_cache=True)
     assert res1 is res2
-

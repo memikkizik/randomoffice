@@ -2,7 +2,6 @@ from pathlib import Path
 from docx import Document
 from openpyxl import Workbook
 from pptx import Presentation
-import pytest
 
 from randomoffice import default_registry
 

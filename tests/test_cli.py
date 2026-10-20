@@ -33,3 +33,12 @@ def test_cli_parse_command(tmp_path: Path, capsys) -> None:
     assert exit_code == 0
     output = capsys.readouterr().out
     assert "CLI Parsed Text" in output
+
+
+def test_desktop_cli_calls_native_entrypoint(monkeypatch) -> None:
+    import sys
+    from types import SimpleNamespace
+    calls = []
+    monkeypatch.setitem(sys.modules, "randomoffice.desktop", SimpleNamespace(run_desktop_app=lambda: calls.append(True)))
+    assert main(["desktop"]) == 0
+    assert calls == [True]

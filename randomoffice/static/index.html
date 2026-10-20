@@ -1,0 +1,3102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RandomOffice 365 - Profesyonel Masaüstü Ofis Paketi</title>
+  <link rel="icon" href="/static/randomoffice-logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#185abd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <style>
+    :root {
+      --word-base: #185abd;
+      --word-dark: #0f3b7d;
+      --word-light: #f0f6fd;
+      --word-accent: #2b88d8;
+
+      --excel-base: #107c41;
+      --excel-dark: #0a4c28;
+      --excel-light: #f0f9f3;
+      --excel-accent: #21a366;
+
+      --ppt-base: #c43e1c;
+      --ppt-dark: #872b14;
+      --ppt-light: #fcf2ee;
+      --ppt-accent: #d83b01;
+
+      --theme-color: #185abd;
+      --theme-dark: #0f3b7d;
+      --theme-light: #f0f6fd;
+      --theme-accent: #2b88d8;
+
+      --bg-canvas: #edebe9;
+      --bg-ruler: #f3f2f1;
+      --border-subtle: #edebe9;
+      --border-card: #d2d0ce;
+      --text-main: #201f1e;
+      --text-muted: #605e5c;
+      --text-hint: #8a8886;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      user-select: none;
+    }
+
+    /* 1. TOP APPLICATION BAR */
+    .app-title-bar {
+      height: 44px;
+      flex-shrink: 0;
+      background: var(--theme-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      transition: background 0.25s ease;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .top-left-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .waffle-trigger {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 4px);
+      grid-gap: 3px;
+      align-content: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 4px;
+      padding: 6px;
+      transition: background 0.15s;
+    }
+    .waffle-trigger:hover { background: rgba(255,255,255,0.22); }
+    .waffle-cell { width: 4px; height: 4px; background: white; border-radius: 1px; }
+
+    .autosave-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      background: rgba(0,0,0,0.2);
+      padding: 3px 9px;
+      border-radius: 12px;
+      cursor: default;
+    }
+    .autosave-glow {
+      width: 7px;
+      height: 7px;
+      background: #70ff70;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #70ff70;
+      animation: pulseGlow 2.5s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    .quick-tool-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .quick-tool-btn:hover { background: rgba(255,255,255,0.22); }
+
+    .doc-branding-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .app-logo-badge {
+      width: 25px;
+      height: 25px;
+      display: inline-block;
+      background: linear-gradient(145deg, #123b78, #185abd 55%, #6b4cc2);
+      border: 1px solid rgba(255,255,255,0.48);
+      border-radius: 7px;
+      box-shadow: 0 2px 6px rgba(7, 25, 62, 0.28);
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 23px;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      letter-spacing: -1px;
+      position: relative;
+      font-size: 0;
+      flex-shrink: 0;
+    }
+    .app-logo-badge::before {
+      content: 'R';
+      font-size: 15px;
+      letter-spacing: -1px;
+    }
+    .app-logo-badge::after {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      right: 3px;
+      bottom: 3px;
+      border-radius: 50%;
+      background: #8ce0c0;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.35);
+    }
+    .doc-name-editor {
+      background: transparent;
+      border: 1px solid transparent;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      outline: none;
+      width: 220px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .doc-name-editor:hover { background: rgba(255,255,255,0.18); }
+    .doc-name-editor:focus { background: white; color: var(--text-main); }
+    .cloud-sync-status {
+      font-size: 11px;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* SEARCH / TELL ME BOX */
+    .tell-me-search-box {
+      position: relative;
+      width: 260px;
+      margin: 0 10px;
+    }
+    .tell-me-input {
+      width: 100%;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 14px;
+      padding: 0 12px 0 30px;
+      color: white;
+      font-size: 12px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .tell-me-input::placeholder { color: rgba(255, 255, 255, 0.7); }
+    .tell-me-input:focus {
+      background: white;
+      color: var(--text-main);
+      border-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .tell-me-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      pointer-events: none;
+    }
+    .tell-me-input:focus + .tell-me-icon { color: var(--text-muted); }
+
+    .tell-me-results {
+      position: absolute;
+      top: 34px;
+      left: 0;
+      width: 280px;
+      background: white;
+      border: 1px solid #c8c6c4;
+      border-radius: 6px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      padding: 6px 0;
+      z-index: 10000;
+      display: none;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .tell-me-item {
+      padding: 8px 14px;
+      font-size: 12.5px;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tell-me-item:hover { background: #f3f2f1; color: var(--theme-color); font-weight: 600; }
+
+    .top-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-action-btn {
+      background: rgba(255,255,255,0.18);
+      border: none;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .header-action-btn:hover { background: rgba(255,255,255,0.28); }
+    .btn-download-desktop {
+      background: #004e8c;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .btn-download-desktop.active-desktop {
+      background: rgba(0, 128, 55, 0.3);
+      border: 1px solid rgba(112, 255, 112, 0.5);
+      cursor: default;
+    }
+    .btn-save-direct {
+      background: white;
+      color: var(--theme-color);
+      font-weight: 600;
+    }
+    .btn-save-direct:hover { background: #fdfdfd; }
+    .user-profile-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #003a66;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    /* 2. RIBBON NAVIGATION TABS */
+    .ribbon-tabs-container {
+      height: 32px;
+      flex-shrink: 0;
+      background: #faf9f8;
+      border-bottom: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 2px;
+    }
+    .ribbon-tab-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-main);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .ribbon-tab-btn:hover { background: #edebe9; }
+    .ribbon-tab-btn.active {
+      color: var(--theme-color);
+      border-bottom-color: var(--theme-color);
+      font-weight: 600;
+      background: white;
+    }
+    .file-tab-btn {
+      background: var(--theme-color);
+      color: white;
+      font-weight: 600;
+      border-radius: 3px 3px 0 0;
+    }
+    .file-tab-btn:hover { background: var(--theme-dark); color: white; }
+
+    .app-switcher-dock {
+      margin-left: auto;
+      display: flex;
+      gap: 3px;
+      background: #edebe9;
+      padding: 2px;
+      border-radius: 4px;
+    }
+    .app-pill {
+      background: transparent;
+      border: none;
+      padding: 3px 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 3px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .app-pill:hover { color: #000; }
+    .app-pill.active-word { background: var(--word-base); color: white; }
+    .app-pill.active-excel { background: var(--excel-base); color: white; }
+    .app-pill.active-ppt { background: var(--ppt-base); color: white; }
+
+    /* 3. RIBBON TOOLBAR */
+    .ribbon-toolbar {
+      height: 68px;
+      flex-shrink: 0;
+      background: white;
+      border-bottom: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      padding: 4px 14px;
+      gap: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      overflow-x: auto;
+    }
+    .ribbon-section {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      gap: 10px;
+    }
+    .ribbon-group-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      height: 100%;
+      border-right: 1px solid var(--border-subtle);
+      padding-right: 10px;
+    }
+    .ribbon-row {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .group-caption {
+      font-size: 9.5px;
+      color: var(--text-hint);
+      letter-spacing: 0.2px;
+    }
+    .r-tool {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 4px 6px;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      min-width: 26px;
+      height: 26px;
+      transition: all 0.1s;
+    }
+    .r-tool:hover { background: #f3f2f1; border-color: #d2d0ce; }
+    .r-tool.active { background: var(--theme-light); border-color: var(--theme-color); color: var(--theme-color); }
+    .r-select {
+      height: 26px;
+      padding: 0 6px;
+      border: 1px solid #d2d0ce;
+      border-radius: 3px;
+      background: white;
+      font-size: 12px;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* COLOR PICKERS */
+    .color-btn-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .color-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #c8c6c4;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 4px;
+      padding: 8px;
+      z-index: 1000;
+      grid-template-columns: repeat(5, 20px);
+      gap: 4px;
+    }
+    .color-swatch {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .color-swatch:hover { transform: scale(1.15); }
+
+    /* 4. WORKSPACE STAGE */
+    #workspace-stage {
+      flex: 1 1 auto;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 1. WORD WORKSPACE */
+    .word-workspace {
+      flex: 1;
+      background: #edebe9;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0 80px;
+      position: relative;
+    }
+    .word-ruler {
+      width: 816px;
+      height: 22px;
+      background: #f3f2f1;
+      border-bottom: 1px solid #d2d0ce;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      font-size: 9px;
+      color: #8a8886;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .ruler-tick {
+      flex: 1;
+      text-align: center;
+      border-left: 1px solid #d2d0ce;
+      height: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 2px;
+    }
+    .word-viewport-scaler {
+      transition: transform 0.15s ease;
+      transform-origin: top center;
+      padding: 24px 0;
+    }
+    .word-a4-sheet {
+      width: 816px;
+      min-height: 1056px;
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 0 1px rgba(0,0,0,0.1);
+      padding: 96px;
+      outline: none;
+      font-family: 'Calibri', 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #201f1e;
+      cursor: text;
+      user-select: text;
+      transition: background 0.2s, color 0.2s;
+    }
+    .word-a4-sheet.dark-sheet {
+      background: #201f1e;
+      color: #f3f2f1;
+    }
+    .word-a4-sheet h1 { font-size: 26px; font-weight: 700; color: #185abd; margin-bottom: 16px; }
+    .word-a4-sheet.dark-sheet h1 { color: #6cb8f6; }
+    .word-a4-sheet h2 { font-size: 20px; font-weight: 600; color: #103f91; margin: 18px 0 10px; }
+    .word-a4-sheet.dark-sheet h2 { color: #8ec8f6; }
+    .word-a4-sheet h3 { font-size: 16px; font-weight: 600; color: #323130; margin: 14px 0 8px; }
+    .word-a4-sheet.dark-sheet h3 { color: #d2d0ce; }
+    .word-a4-sheet p { margin-bottom: 12px; }
+    .word-a4-sheet table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .word-a4-sheet th, .word-a4-sheet td {
+      border: 1px solid #8a8886;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .word-a4-sheet th { background: #f3f2f1; font-weight: 600; }
+    .word-a4-sheet.dark-sheet th { background: #323130; color: white; }
+    .word-a4-sheet img { max-width: 100%; border-radius: 4px; margin: 8px 0; }
+    .word-a4-sheet blockquote {
+      border-left: 4px solid var(--theme-color);
+      padding-left: 12px;
+      margin: 12px 0;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* 2. EXCEL WORKSPACE */
+    .excel-workspace {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      background: white;
+    }
+    .excel-fx-bar {
+      height: 32px;
+      background: white;
+      border-bottom: 1px solid #d2d0ce;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 6px;
+    }
+    .cell-id-box {
+      width: 60px;
+      height: 24px;
+      border: 1px solid #d2d0ce;
+      background: #faf9f8;
+      font-weight: 600;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fx-tag { font-style: italic; font-weight: bold; color: #797775; font-size: 13px; }
+    .cell-formula-editor {
+      flex: 1;
+      height: 24px;
+      border: 1px solid #d2d0ce;
+      padding: 0 8px;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      outline: none;
+    }
+    .excel-scroll-area {
+      flex: 1;
+      overflow: auto;
+      position: relative;
+    }
+    .excel-matrix {
+      border-collapse: collapse;
+      font-size: 12.5px;
+      table-layout: fixed;
+    }
+    .excel-matrix th {
+      background: #f8f9fa;
+      color: #605e5c;
+      font-weight: 500;
+      border: 1px solid #d2d0ce;
+      padding: 3px 6px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      user-select: none;
+      min-width: 90px;
+    }
+    .excel-matrix th.row-idx { left: 0; z-index: 11; width: 44px; min-width: 44px; }
+    .excel-matrix td {
+      border: 1px solid #e1dfdd;
+      padding: 4px 6px;
+      height: 24px;
+      min-width: 90px;
+      max-width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      outline: none;
+      user-select: text;
+    }
+    .excel-matrix td.cell-focused {
+      border: 2px solid var(--excel-base) !important;
+      background: #f7fcf9;
+    }
+    .excel-bottom-dock {
+      height: 32px;
+      background: #f3f2f1;
+      border-top: 1px solid #d2d0ce;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .sheet-tabs-list {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .sheet-tab-card {
+      background: #e1dfdd;
+      border: 1px solid #c8c6c4;
+      border-bottom: none;
+      padding: 4px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 4px 4px 0 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sheet-tab-card.active { background: white; color: var(--excel-base); font-weight: 600; }
+    .sheet-tab-close { font-size: 10px; color: #8a8886; cursor: pointer; }
+    .sheet-tab-close:hover { color: #d83b01; }
+
+    /* 3. PPT WORKSPACE */
+    .ppt-workspace {
+      flex: 1;
+      display: none;
+      background: #f3f2f1;
+      position: relative;
+    }
+    .ppt-slides-sidebar {
+      width: 240px;
+      background: white;
+      border-right: 1px solid #d2d0ce;
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .slide-thumb-node {
+      aspect-ratio: 16/9;
+      background: #faf9f8;
+      border: 2px solid #edebe9;
+      border-radius: 4px;
+      padding: 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.15s;
+    }
+    .slide-thumb-node:hover { border-color: #a19f9d; }
+    .slide-thumb-node.active {
+      border-color: var(--ppt-base);
+      box-shadow: 0 0 0 1px var(--ppt-base);
+      background: white;
+    }
+    .slide-thumb-num {
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      font-weight: bold;
+      color: #8a8886;
+      font-size: 10px;
+    }
+    .slide-thumb-text {
+      margin-left: 18px;
+      font-weight: 600;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .slide-thumb-actions {
+      position: absolute;
+      right: 6px;
+      top: 6px;
+      display: none;
+      gap: 3px;
+    }
+    .slide-thumb-node:hover .slide-thumb-actions { display: flex; }
+    .thumb-mini-btn {
+      background: rgba(0,0,0,0.06);
+      border: none;
+      border-radius: 2px;
+      width: 18px;
+      height: 18px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .thumb-mini-btn:hover { background: #d83b01; color: white; }
+
+    .ppt-canvas-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: auto;
+    }
+    .slide-canvas-card {
+      width: 960px;
+      aspect-ratio: 16/9;
+      background: white;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+      border-radius: 4px;
+      padding: 50px 70px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      user-select: text;
+      transition: background 0.25s, color 0.25s;
+    }
+    .slide-canvas-card.theme-dark { background: #1e1e1e; color: #f3f2f1; }
+    .slide-canvas-card.theme-navy { background: #0f2b5c; color: #ffffff; }
+    .slide-canvas-card.theme-emerald { background: #0d4d35; color: #ffffff; }
+    .slide-canvas-card.theme-coral { background: #5c2014; color: #ffffff; }
+
+    .slide-header-box {
+      font-size: 32px;
+      font-weight: 700;
+      color: inherit;
+      outline: none;
+      border-bottom: 2px dashed transparent;
+      padding-bottom: 4px;
+    }
+    .slide-header-box:hover, .slide-header-box:focus { border-bottom-color: var(--ppt-base); }
+    .slide-body-box {
+      flex: 1;
+      font-size: 20px;
+      line-height: 1.6;
+      color: inherit;
+      outline: none;
+      border: 1px dashed transparent;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .slide-body-box:hover, .slide-body-box:focus { border-color: var(--ppt-base); }
+
+    .ppt-notes-bar {
+      width: 960px;
+      margin-top: 10px;
+      background: white;
+      border: 1px solid #d2d0ce;
+      border-radius: 4px;
+      padding: 6px 12px;
+    }
+    .ppt-speaker-notes {
+      width: 100%;
+      height: 40px;
+      border: none;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 12px;
+      color: var(--text-main);
+    }
+
+    /* FOOTER STATUS BAR */
+    .desktop-status-bar {
+      height: 24px;
+      flex-shrink: 0;
+      background: #faf9f8;
+      border-top: 1px solid #d2d0ce;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-size: 11px;
+      color: #605e5c;
+    }
+    .status-section-left, .status-section-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .zoom-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .zoom-slider-range {
+      width: 80px;
+      height: 4px;
+      accent-color: var(--theme-color);
+      cursor: pointer;
+    }
+
+    /* FULLSCREEN PRESENTER SLIDESHOW */
+    #presenter-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: white;
+      z-index: 10000;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 140px;
+      cursor: pointer;
+    }
+    #presenter-title { font-size: 52px; font-weight: 700; color: #ffb900; margin-bottom: 30px; }
+    #presenter-list { font-size: 30px; line-height: 1.8; margin-left: 40px; }
+    .presenter-hud {
+      position: absolute;
+      bottom: 20px;
+      right: 40px;
+      font-size: 13px;
+      color: #888;
+    }
+    .presenter-nav-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 40px;
+      display: flex;
+      gap: 10px;
+    }
+    .presenter-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .presenter-btn:hover { background: rgba(255,255,255,0.4); }
+
+    /* BACKSTAGE DOSYA HUB */
+    #backstage-hub {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #faf9f8;
+      z-index: 2000;
+      flex-direction: row;
+    }
+    .hub-sidebar {
+      width: 220px;
+      background: var(--theme-color);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 0;
+      gap: 4px;
+    }
+    .hub-return-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .hub-return-btn:hover { background: rgba(255,255,255,0.15); }
+    .hub-nav-item {
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hub-nav-item:hover { background: rgba(255,255,255,0.15); }
+    .hub-nav-item.active { background: white; color: var(--theme-color); font-weight: 600; }
+
+    .hub-main-area {
+      flex: 1;
+      padding: 40px 60px;
+      overflow-y: auto;
+    }
+    .hub-headline { font-size: 26px; font-weight: 600; margin-bottom: 24px; }
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .template-tile {
+      background: white;
+      border: 1px solid #d2d0ce;
+      border-radius: 6px;
+      padding: 20px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .template-tile:hover {
+      border-color: var(--theme-color);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .tile-icon { font-size: 36px; margin-bottom: 10px; }
+    .tile-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .tile-desc { font-size: 11px; color: #605e5c; }
+
+    /* CONTEXT MENU */
+    #desktop-ctx-menu {
+      display: none;
+      position: fixed;
+      background: white;
+      border: 1px solid #d2d0ce;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      border-radius: 4px;
+      padding: 4px 0;
+      z-index: 5000;
+      min-width: 170px;
+    }
+    .ctx-row {
+      padding: 6px 16px;
+      font-size: 12.5px;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ctx-row:hover { background: #f3f2f1; color: #000; }
+    .ctx-divider { height: 1px; background: #edebe9; margin: 3px 0; }
+
+    /* TOAST ALERT */
+    .system-toast {
+      position: fixed;
+      bottom: 34px;
+      right: 24px;
+      background: #201f1e;
+      color: white;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 10000;
+    }
+
+    /* DRAG & DROP OVERLAY */
+    #drag-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 90, 189, 0.85);
+      color: white;
+      z-index: 15000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    #file-upload-input { display: none; }
+    #image-upload-input { display: none; }
+
+    /* NATIVE PRINT PREVIEW STYLES */
+    @media print {
+      @page {
+        size: auto;
+        margin: 15mm;
+      }
+
+      html, body {
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+
+      /* Hide all non-document UI */
+      .app-title-bar,
+      .ribbon-tabs-container,
+      .ribbon-toolbar,
+      .desktop-status-bar,
+      #backstage-hub,
+      #desktop-ctx-menu,
+      .word-ruler,
+      .tell-me-search-box,
+      .tell-me-results,
+      .system-toast,
+      #drag-overlay,
+      #presenter-modal,
+      .excel-fx-bar,
+      .excel-bottom-dock,
+      .ppt-slides-sidebar,
+      .ppt-notes-bar,
+      .presenter-nav-bar,
+      .presenter-hud,
+      .color-dropdown {
+        display: none !important;
+      }
+
+      #workspace-stage {
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      /* 1. WORD PRINTING */
+      body[data-active-app="word"] .excel-workspace,
+      body[data-active-app="word"] .ppt-workspace {
+        display: none !important;
+      }
+
+      body[data-active-app="word"] .word-workspace {
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+        background: white !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      body[data-active-app="word"] .word-viewport-scaler {
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      body[data-active-app="word"] .word-a4-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt !important;
+        line-height: 1.5 !important;
+      }
+
+      body[data-active-app="word"] .word-a4-sheet table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        page-break-inside: avoid !important;
+        margin: 12pt 0 !important;
+      }
+
+      body[data-active-app="word"] .word-a4-sheet th,
+      body[data-active-app="word"] .word-a4-sheet td {
+        border: 1pt solid #000 !important;
+        padding: 6pt 8pt !important;
+      }
+
+      body[data-active-app="word"] .word-a4-sheet h1,
+      body[data-active-app="word"] .word-a4-sheet h2,
+      body[data-active-app="word"] .word-a4-sheet h3 {
+        color: #000 !important;
+        page-break-after: avoid !important;
+      }
+
+      /* 2. EXCEL PRINTING */
+      body[data-active-app="excel"] .word-workspace,
+      body[data-active-app="excel"] .ppt-workspace {
+        display: none !important;
+      }
+
+      body[data-active-app="excel"] .excel-workspace {
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+        background: white !important;
+      }
+
+      body[data-active-app="excel"] .excel-scroll-area {
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+      }
+
+      body[data-active-app="excel"] .excel-matrix {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 10pt !important;
+        table-layout: auto !important;
+      }
+
+      body[data-active-app="excel"] .excel-matrix th,
+      body[data-active-app="excel"] .excel-matrix td {
+        border: 1pt solid #444 !important;
+        padding: 4pt 6pt !important;
+        color: #000 !important;
+        background: white !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+      }
+
+      body[data-active-app="excel"] .excel-matrix th {
+        font-weight: bold !important;
+        background: #f0f0f0 !important;
+      }
+
+      /* 3. POWERPOINT PRINTING */
+      body[data-active-app="powerpoint"] .word-workspace,
+      body[data-active-app="powerpoint"] .excel-workspace {
+        display: none !important;
+      }
+
+      body[data-active-app="powerpoint"] .ppt-workspace {
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: 100% !important;
+        background: white !important;
+      }
+
+      body[data-active-app="powerpoint"] .ppt-canvas-stage {
+        padding: 0 !important;
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+      }
+
+      body[data-active-app="powerpoint"] .slide-canvas-card {
+        box-shadow: none !important;
+        border: 1pt solid #555 !important;
+        width: 100% !important;
+        aspect-ratio: 16/9 !important;
+        padding: 24pt !important;
+        background: white !important;
+        color: black !important;
+        page-break-after: always !important;
+      }
+    }
+  </style>
+</head>
+<body data-active-app="word">
+
+  <!-- 1. TITLE BAR -->
+  <header class="app-title-bar" id="app-title-bar">
+    <div class="top-left-cluster">
+      <div class="waffle-trigger" title="Uygulamalar ve Menü" onclick="openBackstageHub('new')">
+        <div class="waffle-cell"></div><div class="waffle-cell"></div><div class="waffle-cell"></div>
+        <div class="waffle-cell"></div><div class="waffle-cell"></div><div class="waffle-cell"></div>
+        <div class="waffle-cell"></div><div class="waffle-cell"></div><div class="waffle-cell"></div>
+      </div>
+      <div class="autosave-pill" title="Değişiklikleriniz anında yerel olarak korunur">
+        <div class="autosave-glow"></div>
+        <span>Otomatik Kaydet</span>
+      </div>
+      <button class="quick-tool-btn" onclick="saveDocument()" title="Kaydet (Ctrl+S)">💾</button>
+      <button class="quick-tool-btn" onclick="execOfficeAction('undo')" title="Geri Al (Ctrl+Z)">↺</button>
+      <button class="quick-tool-btn" onclick="execOfficeAction('redo')" title="Yinele (Ctrl+Y)">↻</button>
+      <button class="quick-tool-btn" onclick="openBackstageHub('print')" title="Yazdır (Ctrl+P)">🖨️</button>
+    </div>
+
+    <!-- Center Document Name & Search / Tell Me -->
+    <div class="doc-branding-center">
+      <span class="app-logo-badge" id="app-logo-badge">📝</span>
+      <input type="text" class="doc-name-editor" id="doc-name-editor" value="Belge1.docx" title="Belge adını değiştirmek için tıklayın" oninput="onNameEdited(this.value)">
+      <span class="cloud-sync-status" id="cloud-sync-status">✓ Bu cihaza kaydedildi</span>
+    </div>
+
+    <!-- Search / Tell Me Input -->
+    <div class="tell-me-search-box">
+      <input type="text" class="tell-me-input" id="tell-me-input" placeholder="Ne yapmak istiyorsunuz?..." oninput="handleTellMeSearch(this.value)" onblur="closeTellMeDropdownDelay()">
+      <span class="tell-me-icon">🔍</span>
+      <div class="tell-me-results" id="tell-me-results"></div>
+    </div>
+
+    <div class="top-right-cluster">
+      <a href="/api/v1/download/desktop-app" class="header-action-btn btn-download-desktop" id="btn-desktop-download" title="Masaüstü .exe program paketini indir">💻 Masaüstü Uygulaması (.exe)</a>
+      <button class="header-action-btn" onclick="triggerOpenDialog()"><span style="font-size:13px;">📂</span> Aç</button>
+      <button class="header-action-btn btn-save-direct" onclick="saveDocument()"><span style="font-size:13px;">💾</span> Kaydet / İndir</button>
+      <div class="user-profile-circle" title="RandomOffice Yerel Profil">RO</div>
+    </div>
+  </header>
+
+  <!-- 2. RIBBON TABS BAR -->
+  <nav class="ribbon-tabs-container">
+    <button class="ribbon-tab-btn file-tab-btn" onclick="openBackstageHub('new')">Dosya</button>
+    <button class="ribbon-tab-btn active" id="tab-home" onclick="selectRibbonTab('home')">Giriş</button>
+    <button class="ribbon-tab-btn" id="tab-insert" onclick="selectRibbonTab('insert')">Ekle</button>
+    <button class="ribbon-tab-btn" id="tab-excel-tools" style="display:none;" onclick="selectRibbonTab('formulas')">Formüller</button>
+    <button class="ribbon-tab-btn" id="tab-ppt-tools" style="display:none;" onclick="selectRibbonTab('slideshow')">Slayt Gösterisi</button>
+    <button class="ribbon-tab-btn" id="tab-view" onclick="selectRibbonTab('view')">Görünüm</button>
+
+    <div class="app-switcher-dock">
+      <button class="app-pill active-word" id="pill-word" onclick="activateOfficeApp('word')">Word</button>
+      <button class="app-pill" id="pill-excel" onclick="activateOfficeApp('excel')">Excel</button>
+      <button class="app-pill" id="pill-ppt" onclick="activateOfficeApp('powerpoint')">PowerPoint</button>
+    </div>
+  </nav>
+
+  <!-- 3. RIBBON TOOLBAR -->
+  <div class="ribbon-toolbar" id="ribbon-toolbar">
+    
+    <!-- HOME TAB SECTIONS -->
+    <div class="ribbon-section" id="ribbon-sec-home">
+      <!-- CLIPBOARD GROUP -->
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('paste')" title="Yapıştır">📋</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('cut')" title="Kes">✂️</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('copy')" title="Kopyala">📄</button>
+        </div>
+        <div class="group-caption">Pano</div>
+      </div>
+
+      <!-- FONT GROUP (Word & PPT) -->
+      <div class="ribbon-group-box" id="ribbon-font-box">
+        <div class="ribbon-row">
+          <select class="r-select" onchange="execOfficeAction('fontName', this.value)">
+            <option value="Calibri">Calibri</option>
+            <option value="Segoe UI">Segoe UI</option>
+            <option value="Arial">Arial</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Consolas">Consolas</option>
+            <option value="Georgia">Georgia</option>
+          </select>
+          <select class="r-select" style="width:48px;" onchange="execOfficeAction('fontSize', this.value)">
+            <option value="1">8</option>
+            <option value="2">10</option>
+            <option value="3" selected>11</option>
+            <option value="4">12</option>
+            <option value="5">14</option>
+            <option value="6">18</option>
+            <option value="7">24</option>
+          </select>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('bold')" title="Kalın (Ctrl+B)"><b>B</b></button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('italic')" title="İtalik (Ctrl+I)"><i>I</i></button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('underline')" title="Altı Çizili (Ctrl+U)"><u>U</u></button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('strikeThrough')" title="Üstü Çizili"><s>S</s></button>
+          
+          <!-- Text Color -->
+          <div class="color-btn-wrap">
+            <button class="r-tool" onmousedown="event.preventDefault()" onclick="toggleColorPicker('font-color')" title="Metin Rengi" style="color:#d83b01;font-weight:bold;">A▾</button>
+            <div class="color-dropdown" id="dropdown-font-color">
+              <div class="color-swatch" style="background:#000000;" onclick="applyColor('foreColor','#000000')"></div>
+              <div class="color-swatch" style="background:#185abd;" onclick="applyColor('foreColor','#185abd')"></div>
+              <div class="color-swatch" style="background:#107c41;" onclick="applyColor('foreColor','#107c41')"></div>
+              <div class="color-swatch" style="background:#c43e1c;" onclick="applyColor('foreColor','#c43e1c')"></div>
+              <div class="color-swatch" style="background:#5c2d91;" onclick="applyColor('foreColor','#5c2d91')"></div>
+              <div class="color-swatch" style="background:#008272;" onclick="applyColor('foreColor','#008272')"></div>
+              <div class="color-swatch" style="background:#d83b01;" onclick="applyColor('foreColor','#d83b01')"></div>
+              <div class="color-swatch" style="background:#ffb900;" onclick="applyColor('foreColor','#ffb900')"></div>
+              <div class="color-swatch" style="background:#e81123;" onclick="applyColor('foreColor','#e81123')"></div>
+              <div class="color-swatch" style="background:#737373;" onclick="applyColor('foreColor','#737373')"></div>
+            </div>
+          </div>
+
+          <!-- Highlight Color -->
+          <div class="color-btn-wrap">
+            <button class="r-tool" onmousedown="event.preventDefault()" onclick="toggleColorPicker('hilite-color')" title="Vurgu Rengi" style="background:#fff100;">🖍️</button>
+            <div class="color-dropdown" id="dropdown-hilite-color">
+              <div class="color-swatch" style="background:#fff100;" onclick="applyColor('hiliteColor','#fff100')"></div>
+              <div class="color-swatch" style="background:#00ff00;" onclick="applyColor('hiliteColor','#00ff00')"></div>
+              <div class="color-swatch" style="background:#00ffff;" onclick="applyColor('hiliteColor','#00ffff')"></div>
+              <div class="color-swatch" style="background:#ff00ff;" onclick="applyColor('hiliteColor','#ff00ff')"></div>
+              <div class="color-swatch" style="background:#cccccc;" onclick="applyColor('hiliteColor','#cccccc')"></div>
+            </div>
+          </div>
+        </div>
+        <div class="group-caption">Yazı Tipi & Renk</div>
+      </div>
+
+      <!-- PARAGRAPH GROUP -->
+      <div class="ribbon-group-box" id="ribbon-paragraph-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('justifyLeft')" title="Sola Hizala">⇤</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('justifyCenter')" title="Ortala">≡</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('justifyRight')" title="Sağa Hizala">⇥</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('justifyFull')" title="İki Yana Yasla">⇎</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('insertUnorderedList')" title="Madde İmleri">• ≡</button>
+          <button class="r-tool" onmousedown="event.preventDefault()" onclick="execOfficeAction('insertOrderedList')" title="Numaralandırma">1. ≡</button>
+        </div>
+        <div class="group-caption">Paragraf</div>
+      </div>
+
+      <!-- STYLES GROUP -->
+      <div class="ribbon-group-box" id="ribbon-styles-box">
+        <div class="ribbon-row">
+          <select class="r-select" onchange="formatHeadTag(this.value)">
+            <option value="p">Normal Metin</option>
+            <option value="h1">Başlık 1</option>
+            <option value="h2">Başlık 2</option>
+            <option value="h3">Başlık 3</option>
+            <option value="blockquote">Alıntı</option>
+          </select>
+        </div>
+        <div class="group-caption">Stiller</div>
+      </div>
+    </div>
+
+    <!-- INSERT TAB SECTIONS -->
+    <div class="ribbon-section" id="ribbon-sec-insert" style="display:none;">
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onclick="insertGridTable()" title="Tablo Ekle">▦ Tablo</button>
+          <button class="r-tool" onclick="triggerImageUpload()" title="Resim Ekle">🖼️ Resim</button>
+          <button class="r-tool" onclick="insertHyperlink()" title="Bağlantı (Link) Ekle">🔗 Bağlantı</button>
+          <button class="r-tool" onclick="insertHorizontalRule()" title="Yatay Çizgi Ekle">― Çizgi</button>
+          <button class="r-tool" onclick="insertCurrentDateTime()" title="Tarih & Saat Ekle">📅 Tarih</button>
+        </div>
+        <div class="group-caption">Tablo & Medya</div>
+      </div>
+    </div>
+
+    <!-- EXCEL FORMULAS TAB -->
+    <div class="ribbon-section" id="ribbon-sec-formulas" style="display:none;">
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" style="color:var(--excel-base);font-weight:600;" onclick="computeSumExcel()">∑ Toplam (SUM)</button>
+          <button class="r-tool" onclick="computeAvgExcel()">x̄ Ortalama</button>
+          <button class="r-tool" onclick="computeMinMaxExcel('min')">▼ En Küçük (MIN)</button>
+          <button class="r-tool" onclick="computeMinMaxExcel('max')">▲ En Büyük (MAX)</button>
+          <button class="r-tool" onclick="formatCurrencyExcel()">₺ Para Birimi</button>
+          <button class="r-tool" onclick="formatPercentExcel()">% Yüzde</button>
+        </div>
+        <div class="group-caption">İşlev Kitaplığı</div>
+      </div>
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onclick="addTableRowExcel()">➕ Satır Ekle</button>
+          <button class="r-tool" onclick="removeTableRowExcel()">➖ Satır Sil</button>
+          <button class="r-tool" onclick="addTableColExcel()">➕ Sütun Ekle</button>
+          <button class="r-tool" onclick="removeTableColExcel()">➖ Sütun Sil</button>
+          <button class="r-tool" onclick="clearSelectedCell()">🧹 Temizle</button>
+        </div>
+        <div class="group-caption">Hücre İşlemleri</div>
+      </div>
+    </div>
+
+    <!-- PPT SLIDESHOW TAB -->
+    <div class="ribbon-section" id="ribbon-sec-slideshow" style="display:none;">
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" style="background:var(--ppt-base);color:white;font-weight:600;" onclick="launchPresenterShow()">▶️ Baştan Başlat (F5)</button>
+          <button class="r-tool" onclick="launchPresenterShow(activeSlideIndex)">⏩ Geçerli Slayttan</button>
+        </div>
+        <div class="group-caption">Slayt Gösterisi</div>
+      </div>
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onclick="createNewSlide()">➕ Yeni Slayt</button>
+          <button class="r-tool" onclick="duplicateCurrentSlide()">⧉ Çoğalt</button>
+          <button class="r-tool" onclick="removeCurrentSlide()">🗑️ Sil</button>
+        </div>
+        <div class="group-caption">Slayt Yönetimi</div>
+      </div>
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <select class="r-select" onchange="setSlideTheme(this.value)">
+            <option value="white">Modern Beyaz</option>
+            <option value="dark">Koyu Gece</option>
+            <option value="navy">Kurumsal Lacivert</option>
+            <option value="emerald">Zümrüt Yeşili</option>
+            <option value="coral">Sıcak Mercan</option>
+          </select>
+        </div>
+        <div class="group-caption">Tasarım & Tema</div>
+      </div>
+    </div>
+
+    <!-- VIEW TAB SECTIONS -->
+    <div class="ribbon-section" id="ribbon-sec-view" style="display:none;">
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onclick="toggleRuler()">📏 Cetvel Aç/Kapat</button>
+          <button class="r-tool" onclick="toggleDarkCanvas()">🌓 Koyu Tuval</button>
+          <button class="r-tool" onclick="toggleFullscreen()">🔲 Tam Ekran</button>
+        </div>
+        <div class="group-caption">Görünüm Modları</div>
+      </div>
+      <div class="ribbon-group-box">
+        <div class="ribbon-row">
+          <button class="r-tool" onclick="handleZoomScale(50)">50%</button>
+          <button class="r-tool" onclick="handleZoomScale(100)">100%</button>
+          <button class="r-tool" onclick="handleZoomScale(125)">125%</button>
+          <button class="r-tool" onclick="handleZoomScale(150)">150%</button>
+        </div>
+        <div class="group-caption">Yakınlaştırma</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 4. WORKSPACE STAGE -->
+  <main id="workspace-stage">
+
+    <!-- WORD -->
+    <div class="word-workspace" id="word-workspace">
+      <div class="word-ruler" id="word-ruler">
+        <div class="ruler-tick">1</div><div class="ruler-tick">2</div><div class="ruler-tick">3</div>
+        <div class="ruler-tick">4</div><div class="ruler-tick">5</div><div class="ruler-tick">6</div>
+        <div class="ruler-tick">7</div><div class="ruler-tick">8</div><div class="ruler-tick">9</div>
+        <div class="ruler-tick">10</div><div class="ruler-tick">11</div><div class="ruler-tick">12</div>
+        <div class="ruler-tick">13</div><div class="ruler-tick">14</div><div class="ruler-tick">15</div>
+        <div class="ruler-tick">16 cm</div>
+      </div>
+      <div class="word-viewport-scaler" id="word-viewport-scaler">
+        <div class="word-a4-sheet" id="word-editor" contenteditable="true" spellcheck="false" oninput="onWordDocumentChange()">
+          <h1>RandomOffice Belgesi</h1>
+          <p>Microsoft 365 lisansı olmadan Word belgelerinizi doğrudan burada açabilir, biçimlendirebilir, tablolar ve resimler ekleyerek <b>.docx</b> formatında kaydedebilirsiniz.</p>
+          <table>
+            <tr><th>Özellik</th><th>Açıklama</th></tr>
+            <tr><td>Masaüstü Entegrasyonu</td><td>Ctrl+S, Ctrl+P, Ctrl+Z, Ctrl+Y kısayolları ve Yazdırma motoru tam entegre.</td></tr>
+            <tr><td>Formatlar</td><td>DOCX, XLSX, PPTX dosyalarını çift yönlü destekler.</td></tr>
+            <tr><td>Tamamen Ücretsiz</td><td>Halka açık, abonelik ücreti yok, internet olmadan da çalışır.</td></tr>
+          </table>
+          <p>Metinleri düzenleyebilir, yukarıdaki araç çubuğundan stilleri değiştirebilir ve doğrudan yazdırabilirsiniz.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXCEL -->
+    <div class="excel-workspace" id="excel-workspace">
+      <div class="excel-fx-bar">
+        <div class="cell-id-box" id="excel-cell-id">A1</div>
+        <div class="fx-tag">fx</div>
+        <input type="text" class="cell-formula-editor" id="excel-fx-input" placeholder="Formül veya değer yazın (=SUM, =A1+B1, =ORTALAMA vb.)" oninput="onFormulaTyped(this.value)" onkeydown="onFormulaKeyDown(event)">
+      </div>
+      <div class="excel-scroll-area">
+        <table class="excel-matrix" id="excel-sheet-grid"></table>
+      </div>
+      <div class="excel-bottom-dock">
+        <div class="sheet-tabs-list" id="excel-sheet-tabs-list"></div>
+        <button class="r-tool" onclick="addNewSheetTab()" title="Yeni Sayfa">＋</button>
+      </div>
+    </div>
+
+    <!-- POWERPOINT -->
+    <div class="ppt-workspace" id="ppt-workspace">
+      <div class="ppt-slides-sidebar" id="ppt-slides-sidebar"></div>
+      <div class="ppt-canvas-stage">
+        <div class="slide-canvas-card" id="slide-canvas-card">
+          <div class="slide-header-box" id="ppt-slide-header" contenteditable="true" spellcheck="false" oninput="onPptSlideChange()">Sunum Başlığı</div>
+          <div class="slide-body-box" id="ppt-slide-body" contenteditable="true" spellcheck="false" oninput="onPptSlideChange()">
+            • Sunum maddesi 1<br>• Sunum maddesi 2<br>• Sunum maddesi 3
+          </div>
+        </div>
+        <div class="ppt-notes-bar">
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:2px;">Konuşmacı Notları:</div>
+          <textarea class="ppt-speaker-notes" id="ppt-speaker-notes" placeholder="Bu slayt için konuşmacı notlarını buraya yazın..." oninput="onPptNotesChange(this.value)"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 5. STATUS BAR -->
+  <footer class="desktop-status-bar">
+    <div class="status-section-left">
+      <span id="sb-doc-page">Sayfa 1 / 1</span>
+      <span id="sb-word-count">38 Sözcük</span>
+      <span id="sb-reading-time">~1 dk okuma</span>
+    </div>
+    <div class="status-section-right">
+      <span id="sb-mode-info">Baskı Düzeni</span>
+      <div class="zoom-ctrl">
+        <span id="sb-zoom-pct">100%</span>
+        <input type="range" class="zoom-slider-range" id="zoom-slider" min="50" max="150" value="100" oninput="handleZoomScale(this.value)">
+      </div>
+    </div>
+  </footer>
+
+  <!-- 6. BACKSTAGE / DOSYA HUB -->
+  <div id="backstage-hub">
+    <div class="hub-sidebar">
+      <button class="hub-return-btn" onclick="closeBackstageHub()">← Belgeye Dön</button>
+      <div class="hub-nav-item active" id="hub-nav-new" onclick="switchHubSection('new')">🆕 Yeni</div>
+      <div class="hub-nav-item" onclick="triggerOpenDialog()">📂 Aç</div>
+      <div class="hub-nav-item" onclick="saveDocument()">💾 Farklı Kaydet & İndir</div>
+      <div class="hub-nav-item" id="hub-nav-print" onclick="switchHubSection('print')">🖨️ Yazdır (Print)</div>
+      <div class="hub-nav-item" id="hub-nav-about" onclick="switchHubSection('about')">ℹ️ Hakkında</div>
+    </div>
+    <div class="hub-main-area">
+      <!-- NEW SECTION -->
+      <div id="hub-section-new">
+        <h2 class="hub-headline">Yeni Oluştur</h2>
+        <div class="templates-grid">
+          <div class="template-tile" onclick="createBlankFromHub('word')">
+            <div class="tile-icon" style="color:var(--word-base);">📝</div>
+            <div class="tile-title">Boş Word Belgesi</div>
+            <div class="tile-desc">Rapor, dilekçe ve makale hazırlayın.</div>
+          </div>
+          <div class="template-tile" onclick="createTemplateFromHub('word-report')">
+            <div class="tile-icon" style="color:var(--word-base);">📑</div>
+            <div class="tile-title">Resmi Rapor Şablonu</div>
+            <div class="tile-desc">Başlık, özet ve tablo düzeni hazır.</div>
+          </div>
+          <div class="template-tile" onclick="createBlankFromHub('excel')">
+            <div class="tile-icon" style="color:var(--excel-base);">📊</div>
+            <div class="tile-title">Boş Excel Tablosu</div>
+            <div class="tile-desc">Hesaplama ve liste sayfaları başlatın.</div>
+          </div>
+          <div class="template-tile" onclick="createTemplateFromHub('excel-budget')">
+            <div class="tile-icon" style="color:var(--excel-base);">💰</div>
+            <div class="tile-title">Aylık Bütçe Tablosu</div>
+            <div class="tile-desc">Gelir, gider ve otomatik bakiye hesaplaması.</div>
+          </div>
+          <div class="template-tile" onclick="createBlankFromHub('powerpoint')">
+            <div class="tile-icon" style="color:var(--ppt-base);">📽️</div>
+            <div class="tile-title">Boş PowerPoint Sunumu</div>
+            <div class="tile-desc">Slayt gösterileri hazırlayın ve sunun.</div>
+          </div>
+          <a href="/api/v1/download/desktop-app" class="template-tile" style="text-decoration:none;color:inherit;">
+            <div class="tile-icon" style="color:#004e8c;">💻</div>
+            <div class="tile-title">Masaüstü .EXE İndir</div>
+            <div class="tile-desc">Windows için tam bağımsız program paketi.</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- PRINT SECTION IN BACKSTAGE -->
+      <div id="hub-section-print" style="display:none;">
+        <h2 class="hub-headline">Yazdır ve PDF Çıktısı</h2>
+        <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+          <!-- Print Settings Box -->
+          <div style="width: 320px; display: flex; flex-direction: column; gap: 16px;">
+            <button class="header-action-btn" onclick="executeActualPrint()" style="background:var(--theme-color);padding: 14px 24px; font-size: 15px; font-weight: 600; justify-content: center; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+              🖨️ Şimdi Yazdır (veya PDF Kaydet)
+            </button>
+            
+            <div style="background: white; border: 1px solid #d2d0ce; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="font-weight: 600; font-size: 13px; color: var(--text-main); border-bottom: 1px solid #eee; padding-bottom: 6px;">Yazıcı ve Çıktı Ayarları</div>
+              <div>
+                <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Hedef Yazıcı:</label>
+                <div style="font-size: 13px; font-weight: 500;">Sistem Yazıcısı / Microsoft Print to PDF</div>
+              </div>
+              <div>
+                <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Sayfalar:</label>
+                <select class="r-select" style="width: 100%;">
+                  <option>Tüm Sayfalar</option>
+                  <option>Geçerli Sayfa</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Kağıt Boyutu:</label>
+                <select class="r-select" style="width: 100%;">
+                  <option>A4 (210 x 297 mm)</option>
+                  <option>Letter (8.5 x 11 inç)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Sayfa Yönü:</label>
+                <select class="r-select" id="print-orientation-select" style="width: 100%;">
+                  <option value="portrait">Dikey (Portrait)</option>
+                  <option value="landscape">Yatay (Landscape)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Renk:</label>
+                <select class="r-select" style="width: 100%;">
+                  <option>Renkli</option>
+                  <option>Siyah ve Beyaz</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Print Live Preview Stage -->
+          <div style="flex: 1; min-width: 320px; display: flex; flex-direction: column; align-items: center;">
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Canlı Baskı Önizlemesi</div>
+            <div id="print-live-preview-box" style="background: white; width: 440px; min-height: 560px; max-height: 620px; box-shadow: 0 4px 18px rgba(0,0,0,0.15); border: 1px solid #c8c6c4; padding: 28px; overflow-y: auto; font-size: 11px;">
+              <!-- Live preview content populated on view -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT SECTION -->
+      <div id="hub-section-about" style="display:none;">
+        <h2 class="hub-headline">RandomOffice 365</h2>
+        <p style="font-size:14px;line-height:1.7;color:#333;max-width:620px;">
+          <b>RandomOffice</b>, Microsoft 365 aboneliğine alternatif olarak geliştirilmiş, tamamen ücretsiz ve halka açık profesyonel bir masaüstü ofis süitidir.
+          <br><br>
+          Kullanıcılar Word (.docx), Excel (.xlsx) ve PowerPoint (.pptx) dosyalarını hiçbir ücret ödemeden ve hesap açmadan doğrudan açabilir, zengin biçimlendirme araçlarıyla düzenleyebilir ve orijinal Office formatlarında kaydedebilirler.
+          <br><br>
+          Windows Defender Güvenlik Duvarı veya internet bağlantısına ihtiyaç duymadan, sıfır ağ soketiyle %100 yerel ve güvenli çalışır.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. FULLSCREEN PRESENTER MODAL -->
+  <div id="presenter-modal" onclick="advanceSlide()">
+    <div id="presenter-title"></div>
+    <ul id="presenter-list"></ul>
+    <div class="presenter-nav-bar" onclick="event.stopPropagation()">
+      <button class="presenter-btn" onclick="prevSlide()">◀ Önceki</button>
+      <button class="presenter-btn" onclick="advanceSlide()">Sonraki ▶</button>
+      <button class="presenter-btn" onclick="exitPresenterShow()">Çıkış (ESC)</button>
+    </div>
+    <div class="presenter-hud" id="presenter-hud">1 / 1 • [Boşluk]/[Sağ Ok]: İleri • [Sol Ok]: Geri • [ESC]: Çıkış</div>
+  </div>
+
+  <!-- 8. CONTEXT MENU -->
+  <div id="desktop-ctx-menu">
+    <div class="ctx-row" onclick="execOfficeAction('cut')">✂️ Kes</div>
+    <div class="ctx-row" onclick="execOfficeAction('copy')">📄 Kopyala</div>
+    <div class="ctx-row" onclick="execOfficeAction('paste')">📋 Yapıştır</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-row" onclick="execOfficeAction('bold')"><b>B</b> Kalın</div>
+    <div class="ctx-row" onclick="execOfficeAction('italic')"><i>I</i> İtalik</div>
+    <div class="ctx-row" onclick="insertGridTable()">▦ Tablo Ekle</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-row" onclick="triggerNativePrint()">🖨️ Yazdır (Ctrl+P)</div>
+  </div>
+
+  <!-- 9. DRAG & DROP OVERLAY -->
+  <div id="drag-overlay">
+    <div style="font-size: 54px;">📥</div>
+    <div>Office Belgesini Buraya Bırakın</div>
+    <div style="font-size: 14px; opacity: 0.85;">DOCX, XLSX veya PPTX otomatik olarak açılacaktır</div>
+  </div>
+
+  <input type="file" id="file-upload-input" accept=".docx,.xlsx,.pptx" onchange="handleFilePicked(event)">
+  <input type="file" id="image-upload-input" accept="image/*" onchange="handleImagePicked(event)">
+  <div class="system-toast" id="system-toast"></div>
+
+  <script>
+    let currentOfficeApp = 'word';
+    let currentDocTitle = 'Belge1.docx';
+    let perAppDocNames = { word: 'Belge1.docx', excel: 'Tablo1.xlsx', powerpoint: 'Sunum1.pptx' };
+    let currentActiveTab = 'home';
+    let currentSheetIndex = 0;
+    let excelModel = { sheets: [{ name: 'Sayfa1', rows: [], number_formats: {} }] };
+    let excelUndoStack = [];
+    let excelRedoStack = [];
+    let pptDeck = [
+      { id: 1, title: 'RandomOffice Sunumu', bullets: ['Ücretsiz ve halka açık Office süiti', 'Abonelik gerektirmez', 'Word, Excel ve PowerPoint tam uyumlu'], notes: '', tables: [] }
+    ];
+    let activeSlideIndex = 0;
+    let activeCellPos = { r: 0, c: 0 };
+    let presenterSlideIndex = 0;
+    let isDesktopModeActive = false;
+
+    // Boot
+    window.addEventListener('DOMContentLoaded', () => {
+      document.body.dataset.activeApp = 'word';
+      checkDesktopMode();
+      restoreLocalCache();
+      renderExcelTabs();
+      initExcelGrid();
+      renderPptDeckSidebar();
+      onWordDocumentChange();
+      bindKeyShortcuts();
+      bindContextMenu();
+      bindDragAndDrop();
+      bindGlobalEvents();
+    });
+
+    // Check desktop mode via pywebview
+    function checkDesktopMode() {
+      if (window.pywebview && window.pywebview.api) {
+        setDesktopModeUI();
+      } else {
+        window.addEventListener('pywebviewready', () => {
+          setDesktopModeUI();
+        });
+      }
+    }
+
+    function setDesktopModeUI() {
+      isDesktopModeActive = true;
+      const btn = document.getElementById('btn-desktop-download');
+      if (btn) {
+        btn.innerText = '⚡ Masaüstü Uygulaması (Aktif)';
+        btn.classList.add('active-desktop');
+        btn.removeAttribute('href');
+        btn.onclick = () => showToast('Masaüstü sürümünde tam hızla çalışıyorsunuz.');
+      }
+    }
+
+    // 1. Ribbon Tab Switching
+    function selectRibbonTab(tab) {
+      currentActiveTab = tab;
+      document.querySelectorAll('.ribbon-tab-btn').forEach(btn => {
+        if (!btn.classList.contains('file-tab-btn')) btn.classList.remove('active');
+      });
+
+      const activeBtn = document.getElementById(`tab-${tab}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Hide all ribbon sections
+      document.getElementById('ribbon-sec-home').style.display = 'none';
+      document.getElementById('ribbon-sec-insert').style.display = 'none';
+      document.getElementById('ribbon-sec-formulas').style.display = 'none';
+      document.getElementById('ribbon-sec-slideshow').style.display = 'none';
+      document.getElementById('ribbon-sec-view').style.display = 'none';
+
+      // Show selected section
+      const sec = document.getElementById(`ribbon-sec-${tab}`);
+      if (sec) sec.style.display = 'flex';
+    }
+
+    // 2. App Switcher
+    function activateOfficeApp(app) {
+      currentOfficeApp = app;
+      document.body.dataset.activeApp = app;
+      const root = document.documentElement;
+
+      document.querySelectorAll('.app-pill').forEach(p => p.className = 'app-pill');
+      
+      const tabExcel = document.getElementById('tab-excel-tools');
+      const tabPpt = document.getElementById('tab-ppt-tools');
+      tabExcel.style.display = 'none';
+      tabPpt.style.display = 'none';
+
+      currentDocTitle = perAppDocNames[app] || (app === 'word' ? 'Belge1.docx' : app === 'excel' ? 'Tablo1.xlsx' : 'Sunum1.pptx');
+      document.getElementById('doc-name-editor').value = currentDocTitle;
+
+      if (app === 'word') {
+        root.style.setProperty('--theme-color', 'var(--word-base)');
+        root.style.setProperty('--theme-dark', 'var(--word-dark)');
+        root.style.setProperty('--theme-light', 'var(--word-light)');
+        root.style.setProperty('--theme-accent', 'var(--word-accent)');
+        document.getElementById('pill-word').className = 'app-pill active-word';
+        document.getElementById('app-logo-badge').innerText = '📝';
+
+        document.getElementById('word-workspace').style.display = 'flex';
+        document.getElementById('excel-workspace').style.display = 'none';
+        document.getElementById('ppt-workspace').style.display = 'none';
+
+        selectRibbonTab('home');
+        onWordDocumentChange();
+      } else if (app === 'excel') {
+        root.style.setProperty('--theme-color', 'var(--excel-base)');
+        root.style.setProperty('--theme-dark', 'var(--excel-dark)');
+        root.style.setProperty('--theme-light', 'var(--excel-light)');
+        root.style.setProperty('--theme-accent', 'var(--excel-accent)');
+        document.getElementById('pill-excel').className = 'app-pill active-excel';
+        document.getElementById('app-logo-badge').innerText = '📊';
+
+        document.getElementById('word-workspace').style.display = 'none';
+        document.getElementById('excel-workspace').style.display = 'flex';
+        document.getElementById('ppt-workspace').style.display = 'none';
+
+        tabExcel.style.display = 'inline-block';
+        selectRibbonTab('home');
+
+        document.getElementById('sb-doc-page').innerText = 'Hazır';
+        document.getElementById('sb-word-count').innerText = 'Hücre: A1';
+        document.getElementById('sb-reading-time').innerText = '100%';
+      } else if (app === 'powerpoint') {
+        root.style.setProperty('--theme-color', 'var(--ppt-base)');
+        root.style.setProperty('--theme-dark', 'var(--ppt-dark)');
+        root.style.setProperty('--theme-light', 'var(--ppt-light)');
+        root.style.setProperty('--theme-accent', 'var(--ppt-accent)');
+        document.getElementById('pill-ppt').className = 'app-pill active-ppt';
+        document.getElementById('app-logo-badge').innerText = '📽️';
+
+        document.getElementById('word-workspace').style.display = 'none';
+        document.getElementById('excel-workspace').style.display = 'none';
+        document.getElementById('ppt-workspace').style.display = 'flex';
+
+        tabPpt.style.display = 'inline-block';
+        selectRibbonTab('home');
+
+        document.getElementById('sb-doc-page').innerText = `Slayt ${activeSlideIndex + 1} / ${pptDeck.length}`;
+        document.getElementById('sb-word-count').innerText = 'Türkçe';
+        document.getElementById('sb-reading-time').innerText = '100%';
+        loadSlideToStage(activeSlideIndex);
+      }
+    }
+
+    // 3. Shortcuts & Global Events
+    function bindKeyShortcuts() {
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          saveDocument();
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+          e.preventDefault();
+          openBackstageHub('print');
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+          e.preventDefault();
+          execOfficeAction('undo');
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+          e.preventDefault();
+          execOfficeAction('redo');
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+          e.preventDefault();
+          execOfficeAction('bold');
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'i') {
+          e.preventDefault();
+          execOfficeAction('italic');
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'u') {
+          e.preventDefault();
+          execOfficeAction('underline');
+        } else if (e.key === 'F5' && currentOfficeApp === 'powerpoint') {
+          e.preventDefault();
+          launchPresenterShow();
+        } else if (e.key === 'Escape') {
+          closeBackstageHub();
+          exitPresenterShow();
+          hideColorPickers();
+          closeTellMeDropdown();
+        } else if (currentOfficeApp === 'powerpoint' && document.getElementById('presenter-modal').style.display === 'flex') {
+          if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            advanceSlide();
+          } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prevSlide();
+          }
+        }
+      });
+    }
+
+    function bindContextMenu() {
+      const menu = document.getElementById('desktop-ctx-menu');
+      window.addEventListener('contextmenu', (e) => {
+        if (e.target.closest('#workspace-stage')) {
+          e.preventDefault();
+          menu.style.display = 'block';
+          menu.style.left = `${Math.min(e.clientX, window.innerWidth - 180)}px`;
+          menu.style.top = `${Math.min(e.clientY, window.innerHeight - 200)}px`;
+        }
+      });
+      window.addEventListener('click', () => {
+        menu.style.display = 'none';
+      });
+    }
+
+    function bindGlobalEvents() {
+      window.addEventListener('click', (e) => {
+        if (!e.target.closest('.color-btn-wrap')) hideColorPickers();
+      });
+    }
+
+    function bindDragAndDrop() {
+      const overlay = document.getElementById('drag-overlay');
+      window.addEventListener('dragenter', (e) => {
+        e.preventDefault();
+        overlay.style.display = 'flex';
+      });
+      overlay.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+      overlay.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        overlay.style.display = 'none';
+      });
+      overlay.addEventListener('drop', (e) => {
+        e.preventDefault();
+        overlay.style.display = 'none';
+        const file = e.dataTransfer.files[0];
+        if (file) handleDirectFile(file);
+      });
+    }
+
+    function hideColorPickers() {
+      document.querySelectorAll('.color-dropdown').forEach(d => d.style.display = 'none');
+    }
+
+    function toggleColorPicker(type) {
+      hideColorPickers();
+      const drop = document.getElementById(`dropdown-${type}`);
+      if (drop) drop.style.display = 'grid';
+    }
+
+    function applyColor(cmd, hex) {
+      document.execCommand(cmd, false, hex);
+      hideColorPickers();
+      persistState();
+    }
+
+    // 4. Tell Me / Search Commands
+    const tellMeActions = [
+      { title: '🖨️ Belgeyi Yazdır (Ctrl+P)', exec: () => openBackstageHub('print') },
+      { title: '💾 Kaydet & İndir (Ctrl+S)', exec: () => saveDocument() },
+      { title: '▦ Tablo Ekle', exec: () => insertGridTable() },
+      { title: '🖼️ Resim Ekle', exec: () => triggerImageUpload() },
+      { title: '🔗 Bağlantı (Link) Ekle', exec: () => insertHyperlink() },
+      { title: '📅 Tarih & Saat Ekle', exec: () => insertCurrentDateTime() },
+      { title: '<b>B</b> Metni Kalın Yap', exec: () => execOfficeAction('bold') },
+      { title: '<i>I</i> Metni İtalik Yap', exec: () => execOfficeAction('italic') },
+      { title: '📏 Cetveli Aç / Kapat', exec: () => toggleRuler() },
+      { title: '🌓 Koyu / Açık Tuval', exec: () => toggleDarkCanvas() },
+      { title: '🔲 Tam Ekran Görünüm', exec: () => toggleFullscreen() },
+      { title: '📝 Word Uygulamasına Geç', exec: () => activateOfficeApp('word') },
+      { title: '📊 Excel Uygulamasına Geç', exec: () => activateOfficeApp('excel') },
+      { title: '📽️ PowerPoint Uygulamasına Geç', exec: () => activateOfficeApp('powerpoint') },
+      { title: '▶️ Slayt Gösterisi Başlat (F5)', exec: () => launchPresenterShow() },
+      { title: '∑ Excel Sütun Toplamı Al', exec: () => computeSumExcel() }
+    ];
+
+    function handleTellMeSearch(q) {
+      const list = document.getElementById('tell-me-results');
+      if (!q.trim()) {
+        list.style.display = 'none';
+        return;
+      }
+      const matches = tellMeActions.filter(a => a.title.toLowerCase().includes(q.toLowerCase()));
+      if (matches.length === 0) {
+        list.innerHTML = '<div style="padding:10px 14px;font-size:12px;color:#8a8886;">Eşleşen komut bulunamadı</div>';
+        list.style.display = 'block';
+        return;
+      }
+      list.innerHTML = '';
+      matches.forEach(m => {
+        const row = document.createElement('div');
+        row.className = 'tell-me-item';
+        row.innerHTML = m.title;
+        row.onclick = () => {
+          m.exec();
+          closeTellMeDropdown();
+          document.getElementById('tell-me-input').value = '';
+        };
+        list.appendChild(row);
+      });
+      list.style.display = 'block';
+    }
+
+    function closeTellMeDropdown() {
+      document.getElementById('tell-me-results').style.display = 'none';
+    }
+
+    function closeTellMeDropdownDelay() {
+      setTimeout(closeTellMeDropdown, 250);
+    }
+
+    // 5. Native Print & Print Preview
+    function triggerNativePrint() {
+      document.body.dataset.activeApp = currentOfficeApp;
+      closeBackstageHub();
+      showToast('Yazdırma motoru başlatılıyor...');
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
+
+    function executeActualPrint() {
+      closeBackstageHub();
+      triggerNativePrint();
+    }
+
+    function populatePrintPreview() {
+      const box = document.getElementById('print-live-preview-box');
+      box.innerHTML = '';
+      if (currentOfficeApp === 'word') {
+        const editor = document.getElementById('word-editor');
+        box.innerHTML = editor.innerHTML;
+      } else if (currentOfficeApp === 'excel') {
+        const grid = document.getElementById('excel-sheet-grid');
+        const clone = grid.cloneNode(true);
+        clone.style.width = '100%';
+        clone.style.fontSize = '9px';
+        box.appendChild(clone);
+      } else if (currentOfficeApp === 'powerpoint') {
+        const card = document.getElementById('slide-canvas-card');
+        const clone = card.cloneNode(true);
+        clone.style.width = '100%';
+        clone.style.boxShadow = 'none';
+        clone.style.padding = '16px';
+        box.appendChild(clone);
+      }
+    }
+
+    // 6. View Controls
+    function toggleRuler() {
+      const ruler = document.getElementById('word-ruler');
+      ruler.style.display = (ruler.style.display === 'none') ? 'flex' : 'none';
+      showToast('Cetvel görünümü değiştirildi');
+    }
+
+    function toggleDarkCanvas() {
+      const sheet = document.getElementById('word-editor');
+      sheet.classList.toggle('dark-sheet');
+      showToast(sheet.classList.contains('dark-sheet') ? 'Koyu Tuval Modu Aktif' : 'Açık Tuval Modu Aktif');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    // 7. Persistence & State
+    function persistState() {
+      const state = {
+        app: currentOfficeApp,
+        title: currentDocTitle,
+        perAppDocNames: perAppDocNames,
+        wordHtml: document.getElementById('word-editor').innerHTML,
+        excelData: excelModel,
+        pptData: pptDeck,
+        updated: new Date().toLocaleTimeString()
+      };
+      try {
+        localStorage.setItem('randomoffice_cache_v4', JSON.stringify(state));
+        const syncStatus = document.getElementById('cloud-sync-status');
+        if (syncStatus) syncStatus.innerText = `✓ Kaydedildi (${state.updated})`;
+      } catch (e) {
+        const syncStatus = document.getElementById('cloud-sync-status');
+        if (syncStatus) syncStatus.innerText = '⚠️ Yerel depolama dolu';
+      }
+    }
+
+    function restoreLocalCache() {
+      try {
+        const raw = localStorage.getItem('randomoffice_cache_v4') || localStorage.getItem('randomoffice_cache_v3');
+        if (raw) {
+          const s = JSON.parse(raw);
+          if (s.perAppDocNames) perAppDocNames = s.perAppDocNames;
+          if (s.wordHtml) document.getElementById('word-editor').innerHTML = s.wordHtml;
+          if (s.excelData && s.excelData.sheets) excelModel = s.excelData;
+          if (s.pptData && s.pptData.length) pptDeck = s.pptData;
+          if (s.app) {
+            activateOfficeApp(s.app);
+          } else if (s.title) {
+            currentDocTitle = s.title;
+            document.getElementById('doc-name-editor').value = s.title;
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 8. Backstage Hub & Templates
+    function openBackstageHub(sec = 'new') {
+      document.getElementById('backstage-hub').style.display = 'flex';
+      switchHubSection(sec);
+    }
+    function closeBackstageHub() {
+      document.getElementById('backstage-hub').style.display = 'none';
+    }
+    function switchHubSection(sec) {
+      document.querySelectorAll('.hub-nav-item').forEach(i => i.classList.remove('active'));
+      const activeNav = document.getElementById(`hub-nav-${sec}`);
+      if (activeNav) activeNav.classList.add('active');
+
+      document.getElementById('hub-section-new').style.display = (sec === 'new') ? 'block' : 'none';
+      document.getElementById('hub-section-print').style.display = (sec === 'print') ? 'block' : 'none';
+      document.getElementById('hub-section-about').style.display = (sec === 'about') ? 'block' : 'none';
+
+      if (sec === 'print') {
+        populatePrintPreview();
+      }
+    }
+
+    function createBlankFromHub(app) {
+      closeBackstageHub();
+      activateOfficeApp(app);
+      if (app === 'word') {
+        document.getElementById('word-editor').innerHTML = '<h1>Yeni Belge</h1><p>Metninizi buraya yazabilirsiniz...</p>';
+        currentDocTitle = 'Belge1.docx';
+        perAppDocNames.word = currentDocTitle;
+      } else if (app === 'excel') {
+        const blankRows = [];
+        for (let r = 0; r < 35; r++) {
+          const row = [];
+          for (let c = 0; c < 15; c++) row.push('');
+          blankRows.push(row);
+        }
+        excelModel = { sheets: [{ name: 'Sayfa1', rows: blankRows, number_formats: {} }] };
+        excelUndoStack = [];
+        excelRedoStack = [];
+        currentSheetIndex = 0;
+        renderExcelTabs();
+        renderExcelTableDOM();
+        currentDocTitle = 'Tablo1.xlsx';
+        perAppDocNames.excel = currentDocTitle;
+      } else if (app === 'powerpoint') {
+        pptDeck = [{ id: 1, title: 'Yeni Sunum', bullets: ['Sunum içeriği buraya gelir'], notes: '', tables: [] }];
+        activeSlideIndex = 0;
+        currentDocTitle = 'Sunum1.pptx';
+        perAppDocNames.powerpoint = currentDocTitle;
+        renderPptDeckSidebar();
+      }
+      document.getElementById('doc-name-editor').value = currentDocTitle;
+      persistState();
+    }
+
+    function createTemplateFromHub(tpl) {
+      closeBackstageHub();
+      if (tpl === 'word-report') {
+        activateOfficeApp('word');
+        currentDocTitle = 'Proje_Faaliyet_Raporu.docx';
+        perAppDocNames.word = currentDocTitle;
+        document.getElementById('word-editor').innerHTML = `
+          <h1>Proje Faaliyet ve İlerleme Raporu</h1>
+          <p><b>Tarih:</b> ${new Date().toLocaleDateString('tr-TR')} | <b>Hazırlayan:</b> RandomOffice Proje Ekibi</p>
+          <hr style="margin: 16px 0;">
+          <h2>1. Yönetici Özeti</h2>
+          <p>Bu rapor projenin genel ilerlemesini, hedeflere ulaşma oranını ve önümüzdeki çeyrek planlarını özetlemektedir.</p>
+          <h2>2. Performans Göstergeleri</h2>
+          <table>
+            <tr><th>Metrik</th><th>Hedef</th><th>Gerçekleşen</th><th>Durum</th></tr>
+            <tr><td>Modül Teslimleri</td><td>%100</td><td>%100</td><td>Tamamlandı</td></tr>
+            <tr><td>Kullanıcı Memnuniyeti</td><td>%90</td><td>%98</td><td>Başarılı</td></tr>
+            <tr><td>Lisans Maliyeti</td><td>0 ₺</td><td>0 ₺</td><td>Ücretsiz</td></tr>
+          </table>
+          <h2>3. Sonuç ve Öneriler</h2>
+          <p>Tüm hedefler zamanında ve bütçe aşımı olmaksızın başarıyla tamamlanmıştır.</p>
+        `;
+      } else if (tpl === 'excel-budget') {
+        activateOfficeApp('excel');
+        currentDocTitle = 'Aylik_Butce.xlsx';
+        perAppDocNames.excel = currentDocTitle;
+        const rows = [
+          ['Kategori', 'Açıklama', 'Gelir', 'Gider', 'Net Bakiye'],
+          ['Maaş', 'Aylık net gelir', '55000', '0', '55000'],
+          ['Kira', 'Ev kirası', '0', '18000', '-18000'],
+          ['Faturalar', 'Elektrik, su, internet', '0', '3500', '-3500'],
+          ['Market', 'Gıda ve ihtiyaçlar', '0', '9500', '-9500'],
+          ['Tasarruf', 'Banka mevduat', '10000', '0', '10000']
+        ];
+        excelModel = { sheets: [{ name: 'Bütçe', rows, number_formats: {} }] };
+        currentSheetIndex = 0;
+        renderExcelTabs();
+        renderExcelTableDOM();
+      }
+      document.getElementById('doc-name-editor').value = currentDocTitle;
+      persistState();
+      showToast('Şablon yüklendi!');
+    }
+
+    // 9. Word Functions
+    function onWordDocumentChange() {
+      const text = document.getElementById('word-editor').innerText.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      const chars = text ? text.length : 0;
+      const minutes = Math.max(1, Math.round(words / 150));
+      document.getElementById('sb-doc-page').innerText = 'Sayfa 1 / 1';
+      document.getElementById('sb-word-count').innerText = `${words} Sözcük`;
+      document.getElementById('sb-reading-time').innerText = `~${minutes} dk okuma (${chars} harf)`;
+      persistState();
+    }
+
+    function execOfficeAction(cmd, val = null) {
+      if (currentOfficeApp === 'excel' && (cmd === 'undo' || cmd === 'redo')) {
+        if (cmd === 'undo' && excelUndoStack.length > 0) {
+          const currentSnap = JSON.stringify(excelModel.sheets.map(s => ({ name: s.name, rows: s.rows.map(r => [...r]), number_formats: { ...(s.number_formats || {}) } })));
+          excelRedoStack.push(currentSnap);
+          const prev = JSON.parse(excelUndoStack.pop());
+          excelModel.sheets = prev;
+          renderExcelTabs();
+          renderExcelTableDOM();
+          persistState();
+          return;
+        } else if (cmd === 'redo' && excelRedoStack.length > 0) {
+          const currentSnap = JSON.stringify(excelModel.sheets.map(s => ({ name: s.name, rows: s.rows.map(r => [...r]), number_formats: { ...(s.number_formats || {}) } })));
+          excelUndoStack.push(currentSnap);
+          const next = JSON.parse(excelRedoStack.pop());
+          excelModel.sheets = next;
+          renderExcelTabs();
+          renderExcelTableDOM();
+          persistState();
+          return;
+        }
+      }
+      document.execCommand(cmd, false, val);
+      persistState();
+    }
+
+    function formatHeadTag(tag) {
+      document.execCommand('formatBlock', false, tag);
+      persistState();
+    }
+
+    function insertGridTable() {
+      const html = `<table style="width:100%;border-collapse:collapse;margin:16px 0;">
+        <tr><th style="border:1px solid #8a8886;padding:8px;background:#f3f2f1;">Sütun 1</th><th style="border:1px solid #8a8886;padding:8px;background:#f3f2f1;">Sütun 2</th><th style="border:1px solid #8a8886;padding:8px;background:#f3f2f1;">Sütun 3</th></tr>
+        <tr><td style="border:1px solid #8a8886;padding:8px;">Veri 1</td><td style="border:1px solid #8a8886;padding:8px;">Veri 2</td><td style="border:1px solid #8a8886;padding:8px;">Veri 3</td></tr>
+        <tr><td style="border:1px solid #8a8886;padding:8px;">Veri 4</td><td style="border:1px solid #8a8886;padding:8px;">Veri 5</td><td style="border:1px solid #8a8886;padding:8px;">Veri 6</td></tr>
+      </table><p><br></p>`;
+      document.execCommand('insertHTML', false, html);
+      persistState();
+      showToast('Tablo eklendi');
+    }
+
+    function insertHyperlink() {
+      const url = prompt('Bağlantı adresini girin (URL):', 'https://');
+      if (url) {
+        document.execCommand('createLink', false, url);
+        persistState();
+      }
+    }
+
+    function insertHorizontalRule() {
+      document.execCommand('insertHorizontalRule', false, null);
+      persistState();
+    }
+
+    function insertCurrentDateTime() {
+      const now = new Date().toLocaleString('tr-TR');
+      document.execCommand('insertText', false, now);
+      persistState();
+    }
+
+    function triggerImageUpload() {
+      document.getElementById('image-upload-input').click();
+    }
+
+    function handleImagePicked(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const base64 = ev.target.result;
+        if (currentOfficeApp === 'word') {
+          document.execCommand('insertImage', false, base64);
+        } else if (currentOfficeApp === 'powerpoint') {
+          const img = document.createElement('img');
+          img.src = base64;
+          img.style.maxHeight = '250px';
+          img.style.borderRadius = '4px';
+          document.getElementById('ppt-slide-body').appendChild(img);
+          onPptSlideChange();
+        }
+        showToast('Resim eklendi.');
+        persistState();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 10. Excel Functions & Formula Engine
+    function getExcelColumnLabel(colIndex) {
+      let letter = '';
+      let col = colIndex + 1;
+      while (col > 0) {
+        let remainder = (col - 1) % 26;
+        letter = String.fromCharCode(65 + remainder) + letter;
+        col = Math.floor((col - 1) / 26);
+      }
+      return letter;
+    }
+
+    function recordExcelHistory() {
+      const currentSnap = JSON.stringify(excelModel.sheets.map(s => ({
+        name: s.name,
+        rows: s.rows.map(r => [...r]),
+        number_formats: { ...(s.number_formats || {}) }
+      })));
+      excelUndoStack.push(currentSnap);
+      if (excelUndoStack.length > 50) excelUndoStack.shift();
+      excelRedoStack = [];
+    }
+
+    function initExcelGrid() {
+      if (!excelModel.sheets || excelModel.sheets.length === 0) {
+        excelModel.sheets = [{ name: 'Sayfa1', rows: [], number_formats: {} }];
+      }
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (!sheet.rows || sheet.rows.length === 0) {
+        const rows = [];
+        for (let r = 0; r < 35; r++) {
+          const row = [];
+          for (let c = 0; c < 15; c++) row.push('');
+          rows.push(row);
+        }
+        sheet.rows = rows;
+      }
+      renderExcelTableDOM();
+    }
+
+    function renderExcelTabs() {
+      const dock = document.getElementById('excel-sheet-tabs-list');
+      dock.innerHTML = '';
+      excelModel.sheets.forEach((sheet, idx) => {
+        const card = document.createElement('div');
+        card.className = `sheet-tab-card ${idx === currentSheetIndex ? 'active' : ''}`;
+        card.innerHTML = `<span>${sheet.name || 'Sayfa ' + (idx + 1)}</span>`;
+        if (excelModel.sheets.length > 1) {
+          const closeBtn = document.createElement('span');
+          closeBtn.className = 'sheet-tab-close';
+          closeBtn.innerText = '✕';
+          closeBtn.onclick = (e) => {
+            e.stopPropagation();
+            removeExcelSheet(idx);
+          };
+          card.appendChild(closeBtn);
+        }
+        card.onclick = () => switchExcelSheet(idx);
+        card.ondblclick = () => renameExcelSheet(idx);
+        dock.appendChild(card);
+      });
+    }
+
+    function switchExcelSheet(idx) {
+      currentSheetIndex = idx;
+      renderExcelTabs();
+      renderExcelTableDOM();
+    }
+
+    function addNewSheetTab() {
+      recordExcelHistory();
+      const count = excelModel.sheets.length + 1;
+      const rows = [];
+      for (let r = 0; r < 35; r++) {
+        const row = [];
+        for (let c = 0; c < 15; c++) row.push('');
+        rows.push(row);
+      }
+      excelModel.sheets.push({ name: `Sayfa${count}`, rows, number_formats: {} });
+      currentSheetIndex = excelModel.sheets.length - 1;
+      renderExcelTabs();
+      renderExcelTableDOM();
+      persistState();
+      showToast(`Sayfa${count} oluşturuldu.`);
+    }
+
+    function removeExcelSheet(idx) {
+      if (excelModel.sheets.length <= 1) return;
+      recordExcelHistory();
+      excelModel.sheets.splice(idx, 1);
+      currentSheetIndex = Math.max(0, currentSheetIndex - 1);
+      renderExcelTabs();
+      renderExcelTableDOM();
+      persistState();
+    }
+
+    function renameExcelSheet(idx) {
+      const current = excelModel.sheets[idx].name || `Sayfa${idx+1}`;
+      const name = prompt('Sayfa adını girin:', current);
+      if (name && name.trim()) {
+        recordExcelHistory();
+        excelModel.sheets[idx].name = name.trim();
+        renderExcelTabs();
+        persistState();
+      }
+    }
+
+    function renderExcelTableDOM() {
+      const table = document.getElementById('excel-sheet-grid');
+      table.innerHTML = '';
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      const rows = sheet.rows;
+      if (!rows || rows.length === 0) return;
+
+      const colCount = Math.max(15, rows[0].length);
+      const headerTr = document.createElement('tr');
+      const cornerTh = document.createElement('th');
+      cornerTh.className = 'row-idx';
+      cornerTh.innerText = '';
+      headerTr.appendChild(cornerTh);
+
+      for (let c = 0; c < colCount; c++) {
+        const th = document.createElement('th');
+        th.innerText = getExcelColumnLabel(c);
+        headerTr.appendChild(th);
+      }
+      table.appendChild(headerTr);
+
+      rows.forEach((row, rIdx) => {
+        const tr = document.createElement('tr');
+        const rTh = document.createElement('th');
+        rTh.className = 'row-idx';
+        rTh.innerText = rIdx + 1;
+        tr.appendChild(rTh);
+
+        for (let c = 0; c < colCount; c++) {
+          const td = document.createElement('td');
+          td.contentEditable = "true";
+          const rawVal = (row[c] !== undefined && row[c] !== null) ? row[c] : '';
+          td.innerText = evaluateFormulaDisplay(rawVal);
+          td.dataset.row = rIdx;
+          td.dataset.col = c;
+          td.onfocus = () => selectExcelCell(td, rIdx, c);
+          td.onblur = () => finalizeExcelCell(td, rIdx, c);
+          td.onkeydown = (e) => handleExcelKeyNav(e, rIdx, c);
+          tr.appendChild(td);
+        }
+        table.appendChild(tr);
+      });
+    }
+
+    function selectExcelCell(td, r, c) {
+      activeCellPos = { r, c };
+      document.querySelectorAll('#excel-sheet-grid td').forEach(cell => cell.classList.remove('cell-focused'));
+      td.classList.add('cell-focused');
+      const addr = `${getExcelColumnLabel(c)}${r + 1}`;
+      document.getElementById('excel-cell-id').innerText = addr;
+      
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      const rawVal = (sheet.rows[r] && sheet.rows[r][c] !== undefined && sheet.rows[r][c] !== null) ? sheet.rows[r][c] : '';
+      document.getElementById('excel-fx-input').value = rawVal;
+      document.getElementById('sb-word-count').innerText = `Hücre: ${addr}`;
+    }
+
+    function finalizeExcelCell(td, r, c) {
+      const val = td.innerText.trim();
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (!sheet.rows[r]) sheet.rows[r] = [];
+      const prevVal = sheet.rows[r][c];
+      
+      // If user typed a formula or changed value, record undo
+      if (val !== prevVal) {
+        recordExcelHistory();
+        sheet.rows[r][c] = val;
+      }
+      td.innerText = evaluateFormulaDisplay(sheet.rows[r][c]);
+      persistState();
+    }
+
+    function handleExcelKeyNav(e, r, c) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const next = document.querySelector(`#excel-sheet-grid td[data-row="${r+1}"][data-col="${c}"]`);
+        if (next) next.focus();
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        const next = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c+1}"]`);
+        if (next) next.focus();
+      }
+    }
+
+    function onFormulaTyped(val) {
+      const { r, c } = activeCellPos;
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (!sheet.rows[r]) sheet.rows[r] = [];
+      sheet.rows[r][c] = val;
+      const cell = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c}"]`);
+      if (cell) cell.innerText = val;
+      persistState();
+    }
+
+    function onFormulaKeyDown(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const { r, c } = activeCellPos;
+        const cell = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c}"]`);
+        if (cell) {
+          finalizeExcelCell(cell, r, c);
+          const next = document.querySelector(`#excel-sheet-grid td[data-row="${r+1}"][data-col="${c}"]`);
+          if (next) next.focus();
+        }
+      }
+    }
+
+    function parseCellCoord(ref) {
+      const m = ref.match(/^([A-Z]+)(\d+)$/);
+      if (!m) return null;
+      let col = 0;
+      for (let i = 0; i < m[1].length; i++) {
+        col = col * 26 + (m[1].charCodeAt(i) - 64);
+      }
+      return { r: parseInt(m[2], 10) - 1, c: col - 1 };
+    }
+
+    // Dynamic Safe Formula Evaluator: SUM, AVERAGE, MIN, MAX, COUNT, Arithmetic, Cycle Detection
+    function evaluateFormulaDisplay(val, visited) {
+      if (typeof val !== 'string' || !val.startsWith('=')) {
+        return (val !== undefined && val !== null) ? String(val) : '';
+      }
+      visited = visited || new Set();
+      const raw = val.substring(1).trim();
+      const sheet = (excelModel && excelModel.sheets && excelModel.sheets[currentSheetIndex])
+        ? excelModel.sheets[currentSheetIndex]
+        : { rows: [] };
+      const rows = sheet.rows || [];
+
+      function getVal(coordStr, localVisited) {
+        if (localVisited.has(coordStr)) {
+          throw new Error('#CYCLE!');
+        }
+        const coord = parseCellCoord(coordStr);
+        if (!coord) return 0;
+        const { r, c } = coord;
+        const row = rows[r];
+        if (!row || row[c] === undefined || row[c] === null || row[c] === '') return null;
+        const cellRaw = row[c];
+        if (typeof cellRaw === 'string' && cellRaw.startsWith('=')) {
+          const nextVisited = new Set(localVisited);
+          nextVisited.add(coordStr);
+          const res = evaluateFormulaDisplay(cellRaw, nextVisited);
+          if (res === '#DIV/0!' || res === '#CYCLE!') throw new Error(res);
+          const num = parseFloat(String(res).replace(',', '.'));
+          return isNaN(num) ? 0 : num;
+        }
+        const num = parseFloat(String(cellRaw).replace(',', '.'));
+        return isNaN(num) ? 0 : num;
+      }
+
+      try {
+        let expr = raw.toUpperCase();
+
+        // Check single cell cycle: e.g. =A4 where A4 is =A4
+        if (/^[A-Z]+\d+$/.test(expr)) {
+          if (visited.has(expr)) return '#CYCLE!';
+          const nextVisited = new Set(visited);
+          nextVisited.add(expr);
+          const res = getVal(expr, nextVisited);
+          return res === null ? '' : String(res).replace('.', ',');
+        }
+
+        // Evaluate range functions
+        expr = expr.replace(/(SUM|TOPLA|AVERAGE|ORTALAMA|MIN|MAX|COUNT)\(([A-Z]+\d+):([A-Z]+\d+)\)/g, (m, fn, p1, p2) => {
+          const c1 = parseCellCoord(p1);
+          const c2 = parseCellCoord(p2);
+          if (!c1 || !c2) return '0';
+          const rMin = Math.min(c1.r, c2.r), rMax = Math.max(c1.r, c2.r);
+          const colMin = Math.min(c1.c, c2.c), colMax = Math.max(c1.c, c2.c);
+          const nums = [];
+          for (let r = rMin; r <= rMax; r++) {
+            for (let c = colMin; c <= colMax; c++) {
+              const addr = getExcelColumnLabel(c) + (r + 1);
+              if (visited.has(addr)) throw new Error('#CYCLE!');
+              const row = rows[r];
+              if (row && row[c] !== undefined && row[c] !== null && row[c] !== '') {
+                const nextVisited = new Set(visited);
+                nextVisited.add(addr);
+                const v = getVal(addr, nextVisited);
+                if (v !== null) nums.push(v);
+              }
+            }
+          }
+          fn = fn.toUpperCase();
+          if (fn === 'SUM' || fn === 'TOPLA') {
+            return String(nums.reduce((a, b) => a + b, 0));
+          } else if (fn === 'AVERAGE' || fn === 'ORTALAMA') {
+            return nums.length ? String(nums.reduce((a, b) => a + b, 0) / nums.length) : '0';
+          } else if (fn === 'MIN') {
+            return nums.length ? String(Math.min(...nums)) : '0';
+          } else if (fn === 'MAX') {
+            return nums.length ? String(Math.max(...nums)) : '0';
+          } else if (fn === 'COUNT') {
+            return String(nums.length);
+          }
+          return '0';
+        });
+
+        // Replace single cell references with values
+        expr = expr.replace(/[A-Z]+\d+/g, (addr) => {
+          if (visited.has(addr)) throw new Error('#CYCLE!');
+          const nextVisited = new Set(visited);
+          nextVisited.add(addr);
+          const v = getVal(addr, nextVisited);
+          return v === null ? '0' : String(v);
+        });
+
+        // Division by zero check
+        if (/\/0(?![.\d])/.test(expr)) {
+          return '#DIV/0!';
+        }
+
+        if (/^[\d+\-*/(). ]+$/.test(expr)) {
+          const calc = Function('"use strict"; return (' + expr + ')')();
+          if (!isFinite(calc)) return '#DIV/0!';
+          return String(calc).replace('.', ',');
+        }
+      } catch (err) {
+        if (err.message === '#CYCLE!' || err.message === '#DIV/0!') return err.message;
+      }
+      return val;
+    }
+
+    function addTableRowExcel() {
+      recordExcelHistory();
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      const rows = sheet.rows;
+      const cols = rows.length > 0 ? rows[0].length : 15;
+      rows.push(new Array(cols).fill(''));
+      renderExcelTableDOM();
+      persistState();
+      showToast('Satır eklendi');
+    }
+
+    function removeTableRowExcel() {
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (sheet.rows.length <= 1) return;
+      recordExcelHistory();
+      sheet.rows.pop();
+      renderExcelTableDOM();
+      persistState();
+      showToast('Satır silindi');
+    }
+
+    function addTableColExcel() {
+      recordExcelHistory();
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      sheet.rows.forEach(r => r.push(''));
+      renderExcelTableDOM();
+      persistState();
+      showToast('Sütun eklendi');
+    }
+
+    function removeTableColExcel() {
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (sheet.rows.length > 0 && sheet.rows[0].length <= 1) return;
+      recordExcelHistory();
+      sheet.rows.forEach(r => r.pop());
+      renderExcelTableDOM();
+      persistState();
+      showToast('Sütun silindi');
+    }
+
+    function clearSelectedCell() {
+      const { r, c } = activeCellPos;
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (sheet.rows[r]) {
+        recordExcelHistory();
+        sheet.rows[r][c] = '';
+      }
+      document.getElementById('excel-fx-input').value = '';
+      const cell = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c}"]`);
+      if (cell) cell.innerText = '';
+      persistState();
+      showToast('Hücre temizlendi');
+    }
+
+    function computeSumExcel() {
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      let sum = 0;
+      sheet.rows.forEach(r => {
+        const val = parseFloat(r[activeCellPos.c]);
+        if (!isNaN(val)) sum += val;
+      });
+      alert(`Seçili sütun toplamı (SUM): ${sum.toLocaleString('tr-TR')}`);
+    }
+
+    function computeAvgExcel() {
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      let sum = 0, count = 0;
+      sheet.rows.forEach(r => {
+        const val = parseFloat(r[activeCellPos.c]);
+        if (!isNaN(val)) { sum += val; count++; }
+      });
+      const avg = count > 0 ? (sum / count) : 0;
+      alert(`Seçili sütun ortalaması (AVERAGE): ${avg.toLocaleString('tr-TR', { maximumFractionDigits: 2 })}`);
+    }
+
+    function computeMinMaxExcel(type) {
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      const numbers = [];
+      sheet.rows.forEach(r => {
+        const val = parseFloat(r[activeCellPos.c]);
+        if (!isNaN(val)) numbers.push(val);
+      });
+      if (numbers.length === 0) {
+        alert('Sütunda sayısal veri bulunamadı.');
+        return;
+      }
+      const res = type === 'min' ? Math.min(...numbers) : Math.max(...numbers);
+      alert(`Seçili sütun ${type.toUpperCase()}: ${res.toLocaleString('tr-TR')}`);
+    }
+
+    function formatCurrencyExcel() {
+      const { r, c } = activeCellPos;
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      if (!sheet.number_formats) sheet.number_formats = {};
+      const cell = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c}"]`);
+      if (cell) {
+        const raw = (sheet.rows[r] && sheet.rows[r][c] !== undefined) ? sheet.rows[r][c] : cell.innerText;
+        const val = parseFloat(String(raw).replace(/[^\d.-]/g, ''));
+        if (!isNaN(val)) {
+          recordExcelHistory();
+          sheet.rows[r][c] = val;
+          sheet.number_formats[`${r}:${c}`] = '"₺"#,##0.00';
+          cell.innerText = `₺ ${val.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+          persistState();
+        }
+      }
+    }
+
+    function formatPercentExcel() {
+      const { r, c } = activeCellPos;
+      const sheet = excelModel.sheets[currentSheetIndex] || excelModel.sheets[0];
+      const cell = document.querySelector(`#excel-sheet-grid td[data-row="${r}"][data-col="${c}"]`);
+      if (cell) {
+        const raw = (sheet.rows[r] && sheet.rows[r][c] !== undefined) ? sheet.rows[r][c] : cell.innerText;
+        const val = parseFloat(String(raw).replace(/[^\d.-]/g, ''));
+        if (!isNaN(val)) {
+          recordExcelHistory();
+          sheet.rows[r][c] = val;
+          if (!sheet.number_formats) sheet.number_formats = {};
+          sheet.number_formats[`${r}:${c}`] = '0.00%';
+          cell.innerText = `% ${val.toLocaleString('tr-TR')}`;
+          persistState();
+        }
+      }
+    }
+
+    // 11. PowerPoint Functions
+    function renderPptDeckSidebar() {
+      const pane = document.getElementById('ppt-slides-sidebar');
+      pane.innerHTML = '';
+      pptDeck.forEach((s, idx) => {
+        const card = document.createElement('div');
+        card.className = `slide-thumb-node ${idx === activeSlideIndex ? 'active' : ''}`;
+        card.innerHTML = `
+          <div class="slide-thumb-num">${idx + 1}</div>
+          <div class="slide-thumb-text">${s.title || 'Başlıksız Slayt'}</div>
+          <div class="slide-thumb-actions">
+            <button class="thumb-mini-btn" title="Çoğalt" onclick="duplicateSlideFromThumb(event, ${idx})">⧉</button>
+            <button class="thumb-mini-btn" title="Sil" onclick="removeSlideFromThumb(event, ${idx})">🗑</button>
+          </div>
+        `;
+        card.onclick = () => {
+          activeSlideIndex = idx;
+          renderPptDeckSidebar();
+          loadSlideToStage(idx);
+        };
+        pane.appendChild(card);
+      });
+      loadSlideToStage(activeSlideIndex);
+    }
+
+    function loadSlideToStage(idx) {
+      const s = pptDeck[idx];
+      if (!s) return;
+      document.getElementById('ppt-slide-header').innerText = s.title || '';
+      document.getElementById('ppt-slide-body').innerHTML = (s.bullets || []).map(b => `• ${b}`).join('<br>') || '• Madde 1';
+      const notesElem = document.getElementById('ppt-speaker-notes');
+      if (notesElem) notesElem.value = s.notes || '';
+      document.getElementById('sb-doc-page').innerText = `Slayt ${idx + 1} / ${pptDeck.length}`;
+    }
+
+    function onPptSlideChange() {
+      if (pptDeck[activeSlideIndex]) {
+        pptDeck[activeSlideIndex].title = document.getElementById('ppt-slide-header').innerText.trim();
+        const raw = document.getElementById('ppt-slide-body').innerText.trim();
+        pptDeck[activeSlideIndex].bullets = raw.split('\n').map(l => l.replace(/^[•\s]+/, '')).filter(Boolean);
+        const cardTitle = document.querySelector(`.slide-thumb-node:nth-child(${activeSlideIndex + 1}) .slide-thumb-text`);
+        if (cardTitle) cardTitle.innerText = pptDeck[activeSlideIndex].title || 'Başlıksız';
+        persistState();
+      }
+    }
+
+    function onPptNotesChange(val) {
+      if (pptDeck[activeSlideIndex]) {
+        pptDeck[activeSlideIndex].notes = val;
+        persistState();
+      }
+    }
+
+    function createNewSlide() {
+      pptDeck.push({ id: pptDeck.length + 1, title: 'Yeni Slayt', bullets: ['Yeni konu başlığı'], notes: '', tables: [] });
+      activeSlideIndex = pptDeck.length - 1;
+      renderPptDeckSidebar();
+      persistState();
+      showToast('Yeni slayt eklendi');
+    }
+
+    function duplicateCurrentSlide() {
+      const current = pptDeck[activeSlideIndex];
+      if (!current) return;
+      const clone = {
+        id: pptDeck.length + 1,
+        title: (current.title || 'Slayt') + ' (Kopya)',
+        bullets: [...(current.bullets || [])],
+        notes: current.notes || '',
+        tables: JSON.parse(JSON.stringify(current.tables || []))
+      };
+      pptDeck.splice(activeSlideIndex + 1, 0, clone);
+      activeSlideIndex++;
+      renderPptDeckSidebar();
+      persistState();
+      showToast('Slayt çoğaltıldı');
+    }
+
+    function duplicateSlideFromThumb(e, idx) {
+      e.stopPropagation();
+      const current = pptDeck[idx];
+      if (!current) return;
+      const clone = {
+        id: pptDeck.length + 1,
+        title: (current.title || 'Slayt') + ' (Kopya)',
+        bullets: [...(current.bullets || [])],
+        notes: current.notes || '',
+        tables: JSON.parse(JSON.stringify(current.tables || []))
+      };
+      pptDeck.splice(idx + 1, 0, clone);
+      renderPptDeckSidebar();
+      persistState();
+    }
+
+    function removeCurrentSlide() {
+      if (pptDeck.length <= 1) {
+        alert('Sunumda en az bir slayt bulunmalıdır.');
+        return;
+      }
+      pptDeck.splice(activeSlideIndex, 1);
+      activeSlideIndex = Math.max(0, activeSlideIndex - 1);
+      renderPptDeckSidebar();
+      persistState();
+      showToast('Slayt silindi');
+    }
+
+    function removeSlideFromThumb(e, idx) {
+      e.stopPropagation();
+      if (pptDeck.length <= 1) {
+        alert('Sunumda en az bir slayt bulunmalıdır.');
+        return;
+      }
+      pptDeck.splice(idx, 1);
+      if (activeSlideIndex >= pptDeck.length) activeSlideIndex = pptDeck.length - 1;
+      renderPptDeckSidebar();
+      persistState();
+    }
+
+    function setSlideTheme(theme) {
+      const card = document.getElementById('slide-canvas-card');
+      card.className = `slide-canvas-card theme-${theme}`;
+      showToast(`Sunum teması: ${theme}`);
+    }
+
+    function launchPresenterShow(startIdx = 0) {
+      presenterSlideIndex = startIdx;
+      document.getElementById('presenter-modal').style.display = 'flex';
+      renderPresenterSlide();
+    }
+
+    function renderPresenterSlide() {
+      const s = pptDeck[presenterSlideIndex];
+      if (!s) { exitPresenterShow(); return; }
+      document.getElementById('presenter-title').innerText = s.title || '';
+      const list = document.getElementById('presenter-list');
+      list.innerHTML = '';
+      (s.bullets || []).forEach(b => {
+        const li = document.createElement('li');
+        li.innerText = b;
+        list.appendChild(li);
+      });
+      document.getElementById('presenter-hud').innerText = `${presenterSlideIndex + 1} / ${pptDeck.length} • [Boşluk]/[Sağ Ok]: İleri • [Sol Ok]: Geri • [ESC]: Çıkış`;
+    }
+
+    function advanceSlide() {
+      if (presenterSlideIndex < pptDeck.length - 1) {
+        presenterSlideIndex++;
+        renderPresenterSlide();
+      } else {
+        exitPresenterShow();
+      }
+    }
+
+    function prevSlide() {
+      if (presenterSlideIndex > 0) {
+        presenterSlideIndex--;
+        renderPresenterSlide();
+      }
+    }
+
+    function exitPresenterShow() {
+      document.getElementById('presenter-modal').style.display = 'none';
+    }
+
+    // 12. Zoom Scale
+    function handleZoomScale(val) {
+      document.getElementById('sb-zoom-pct').innerText = `${val}%`;
+      const slider = document.getElementById('zoom-slider');
+      if (slider) slider.value = val;
+      const scale = val / 100;
+      if (currentOfficeApp === 'word') {
+        document.getElementById('word-viewport-scaler').style.transform = `scale(${scale})`;
+      } else if (currentOfficeApp === 'powerpoint') {
+        document.getElementById('slide-canvas-card').style.transform = `scale(${scale})`;
+      }
+    }
+
+    // 13. Open & Save Document (Desktop Bridge + Web API)
+    function triggerOpenDialog() {
+      closeBackstageHub();
+      if (window.pywebview && window.pywebview.api && window.pywebview.api.open_native_file) {
+        showToast('Masaüstü dosya seçici açılıyor...');
+        window.pywebview.api.open_native_file().then(data => {
+          if (data) {
+            if (data.error) alert(data.error);
+            else ingestDocumentData(data);
+          }
+        });
+        return;
+      }
+      document.getElementById('file-upload-input').click();
+    }
+
+    function handleDirectFile(file) {
+      showToast(`${file.name} yükleniyor...`);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch('/api/v1/office/open', { method: 'POST', body: formData })
+        .then(res => res.json())
+        .then(data => {
+          data.filename = file.name;
+          ingestDocumentData(data);
+        })
+        .catch(err => alert('Hata: ' + err.message));
+    }
+
+    function handleFilePicked(e) {
+      const file = e.target.files[0];
+      if (file) handleDirectFile(file);
+    }
+
+    function ingestDocumentData(data) {
+      currentDocTitle = data.title || data.filename || 'Belge.docx';
+      perAppDocNames[data.app || currentOfficeApp] = currentDocTitle;
+      document.getElementById('doc-name-editor').value = currentDocTitle;
+
+      if (data.app === 'word') {
+        const editor = document.getElementById('word-editor');
+        editor.innerHTML = '';
+        if (data.html) {
+          editor.innerHTML = data.html;
+        } else {
+          (data.items || []).forEach(item => {
+            if (item.type === 'paragraph') {
+              const tag = item.level === 'h1' ? 'h1' : item.level === 'h2' ? 'h2' : item.level === 'h3' ? 'h3' : 'p';
+              const el = document.createElement(tag);
+              el.innerText = item.text;
+              editor.appendChild(el);
+            } else if (item.type === 'table') {
+              const tbl = document.createElement('table');
+              (item.rows || []).forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                  const td = document.createElement('td');
+                  td.innerText = cell;
+                  tr.appendChild(td);
+                });
+                tbl.appendChild(tr);
+              });
+              editor.appendChild(tbl);
+            }
+          });
+        }
+        activateOfficeApp('word');
+      } else if (data.app === 'excel') {
+        excelModel = data;
+        currentSheetIndex = 0;
+        renderExcelTabs();
+        renderExcelTableDOM();
+        activateOfficeApp('excel');
+      } else if (data.app === 'powerpoint') {
+        pptDeck = (data.slides || []).map((s, i) => ({
+          id: s.slide_number || (i + 1),
+          title: s.title || `Slayt ${i+1}`,
+          bullets: s.paragraphs || [],
+          notes: s.notes || '',
+          tables: s.tables || []
+        }));
+        activeSlideIndex = 0;
+        renderPptDeckSidebar();
+        activateOfficeApp('powerpoint');
+      }
+      showToast(`${currentDocTitle} başarıyla açıldı!`);
+      persistState();
+    }
+
+    async function saveDocument() {
+      closeBackstageHub();
+      showToast('Belge derleniyor ve kaydediliyor...');
+      let filename = document.getElementById('doc-name-editor').value.trim() || 'Belge.docx';
+      let payload = {};
+      let docType = currentOfficeApp;
+
+      if (currentOfficeApp === 'word') {
+        if (!filename.endsWith('.docx')) filename += '.docx';
+        const editor = document.getElementById('word-editor');
+        const items = [];
+        editor.childNodes.forEach(node => {
+          if (node.nodeType === 1) {
+            const tag = node.tagName.toLowerCase();
+            if (tag === 'table') {
+              const rows = [];
+              node.querySelectorAll('tr').forEach(tr => {
+                const r = [];
+                tr.querySelectorAll('td, th').forEach(c => r.push(c.innerText.trim()));
+                if (r.length > 0) rows.push(r);
+              });
+              if (rows.length > 0) items.push({ type: 'table', rows });
+            } else if (tag === 'img') {
+              // skip raw img
+            } else {
+              items.push({
+                type: 'paragraph',
+                text: node.innerText.trim(),
+                level: tag === 'h1' ? 'h1' : tag === 'h2' ? 'h2' : tag === 'h3' ? 'h3' : 'p'
+              });
+            }
+          }
+        });
+        payload = { app: 'word', title: filename, html: editor.innerHTML, items };
+      } else if (currentOfficeApp === 'excel') {
+        if (!filename.endsWith('.xlsx')) filename += '.xlsx';
+        payload = { app: 'excel', sheets: excelModel.sheets };
+      } else if (currentOfficeApp === 'powerpoint') {
+        if (!filename.endsWith('.pptx')) filename += '.pptx';
+        onPptSlideChange();
+        const notesElem = document.getElementById('ppt-speaker-notes');
+        if (notesElem && pptDeck[activeSlideIndex]) {
+          pptDeck[activeSlideIndex].notes = notesElem.value;
+        }
+        payload = {
+          app: 'powerpoint',
+          slides: pptDeck.map(s => ({
+            slide_number: s.id,
+            title: s.title,
+            paragraphs: s.bullets,
+            notes: s.notes || '',
+            tables: s.tables || []
+          }))
+        };
+      }
+
+      // Native Desktop Mode Save
+      if (window.pywebview && window.pywebview.api && window.pywebview.api.save_native_file) {
+        const res = await window.pywebview.api.save_native_file(docType, filename, payload);
+        if (res && res.success) showToast(`${res.filename || filename} kaydedildi!`);
+        else if (res && res.error) alert('Kaydetme hatası: ' + res.error);
+        return;
+      }
+
+      // Web API Mode Save
+      try {
+        const params = new URLSearchParams({ doc_type: docType, filename });
+        const res = await fetch(`/api/v1/office/export?${params.toString()}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) { alert('İndirme başarısız oldu.'); return; }
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        showToast(`${filename} indirildi!`);
+      } catch (err) {
+        alert('Hata: ' + err.message);
+      }
+    }
+
+    function onNameEdited(name) {
+      currentDocTitle = name;
+      perAppDocNames[currentOfficeApp] = name;
+      persistState();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('system-toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2600);
+    }
+  </script>
+</body>
+</html>

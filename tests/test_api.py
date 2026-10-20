@@ -19,6 +19,31 @@ def test_health_endpoint(client: TestClient) -> None:
     assert data["status"] == "healthy"
     assert "uptime_seconds" in data
     assert ".docx" in data["supported_formats"]
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert response.headers["x-frame-options"] == "SAMEORIGIN"
+
+
+def test_web_ui_is_self_contained(client: TestClient) -> None:
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert "fonts.googleapis.com" not in response.text
+    assert "fonts.gstatic.com" not in response.text
+
+
+def test_manifest_is_available(client: TestClient) -> None:
+    response = client.get("/manifest.json")
+
+    assert response.status_code == 200
+    assert response.json()["short_name"] == "RandomOffice"
+    assert response.json()["icons"][0]["src"] == "/static/randomoffice-logo.svg"
+
+
+def test_brand_logo_is_served_locally(client: TestClient) -> None:
+    response = client.get("/static/randomoffice-logo.svg")
+
+    assert response.status_code == 200
+    assert "RandomOffice" in response.text
 
 
 def test_api_parse_docx(client: TestClient) -> None:
@@ -65,3 +90,14 @@ def test_api_rejects_unsupported_file(client: TestClient) -> None:
     )
     assert response.status_code == 400
     assert "Unsupported file extension" in response.json()["detail"]
+
+
+def test_api_enforces_upload_limit(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("RANDOMOFFICE_MAX_UPLOAD_BYTES", "16")
+    response = client.post(
+        "/api/v1/parse",
+        files={"file": ("test.docx", b"x" * 17, "application/octet-stream")},
+    )
+
+    assert response.status_code == 400
+    assert "Upload exceeds limit" in response.json()["detail"]

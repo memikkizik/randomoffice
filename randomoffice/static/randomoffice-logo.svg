@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">RandomOffice</title>
+  <desc id="desc">Lacivert ve mor zemin üzerinde beyaz belge ve R amblemi</desc>
+  <defs>
+    <linearGradient id="background" x1="32" y1="24" x2="470" y2="492" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#123B78"/>
+      <stop offset="0.55" stop-color="#185ABD"/>
+      <stop offset="1" stop-color="#6B4CC2"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="150" y1="92" x2="348" y2="414" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E6EEFF"/>
+    </linearGradient>
+    <filter id="shadow" x="90" y="50" width="332" height="414" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#081B3A" flood-opacity="0.34"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#background)"/>
+  <circle cx="420" cy="94" r="38" fill="#FFFFFF" fill-opacity="0.12"/>
+  <circle cx="420" cy="94" r="10" fill="#FFFFFF" fill-opacity="0.82"/>
+  <path d="M104 376C155 448 287 470 393 397" fill="none" stroke="#9ED6FF" stroke-linecap="round" stroke-width="12" opacity="0.72"/>
+  <g filter="url(#shadow)">
+    <path d="M152 74H300L365 139V422C365 435.255 354.255 446 341 446H152C138.745 446 128 435.255 128 422V98C128 84.745 138.745 74 152 74Z" fill="url(#paper)"/>
+    <path d="M300 74V127C300 140.255 310.745 151 324 151H365" fill="#C9D9F7"/>
+  </g>
+  <path d="M178 176H315M178 207H286" stroke="#9AB5E2" stroke-linecap="round" stroke-width="13"/>
+  <path d="M174 347V246H244C278 246 296 264 296 291C296 318 278 335 244 335H174M244 335L302 398" fill="none" stroke="#185ABD" stroke-linecap="round" stroke-linejoin="round" stroke-width="27"/>
+  <path d="M174 246V347" stroke="#6B4CC2" stroke-linecap="round" stroke-width="27"/>
+  <circle cx="382" cy="390" r="17" fill="#8CE0C0"/>
+</svg>

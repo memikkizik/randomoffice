@@ -1,0 +1,16 @@
+{
+  "name": "RandomOffice Web Suite",
+  "short_name": "RandomOffice",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#185abd",
+  "theme_color": "#185abd",
+  "description": "Ücretsiz, açık kaynaklı Microsoft Office web alternatifi.",
+  "icons": [
+    {
+      "src": "/static/randomoffice-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -6,10 +6,13 @@ from enum import StrEnum
 from pathlib import Path
 import threading
 import time
+import logging
 from typing import Callable
 
 from ..contracts import SupportedFormat
 from ..performance.guard import FileSecurityGuard
+
+logger = logging.getLogger(__name__)
 
 
 class SyncEvent(StrEnum):
@@ -56,7 +59,7 @@ class DirectorySyncManager:
         self.debounce_seconds = debounce_seconds
 
         self._snapshot: dict[Path, tuple[float, int, str]] = {}  # path -> (mtime, size, hash)
-        self._pending_writes: dict[Path, float] = {}  # path -> last_seen_time
+        self._pending_writes: dict[Path, tuple[FileChange, float]] = {}
         self._stop_event = threading.Event()
         self._thread: threading.Thread | None = None
         self._lock = threading.Lock()
@@ -147,14 +150,30 @@ class DirectorySyncManager:
             try:
                 changes = self.scan_once()
                 for change in changes:
-                    try:
-                        self.on_change(change)
-                    except Exception:
-                        pass
-            except Exception:
-                pass
+                    if change.event_type == SyncEvent.DELETED:
+                        self._pending_writes.pop(change.path, None)
+                        self._dispatch(change)
+                    else:
+                        self._pending_writes[change.path] = (change, time.monotonic())
+                now = time.monotonic()
+                ready = [
+                    path for path, (_, queued_at) in self._pending_writes.items()
+                    if now - queued_at >= self.debounce_seconds
+                ]
+                for path in ready:
+                    change, _ = self._pending_writes.pop(path)
+                    self._dispatch(change)
+            except (OSError, PermissionError):
+                logger.exception("Directory scan failed for %s", self.watch_dir)
 
             self._stop_event.wait(self.poll_interval)
+
+    def _dispatch(self, change: FileChange) -> None:
+        """Invoke the callback while preserving the monitor thread."""
+        try:
+            self.on_change(change)
+        except Exception:
+            logger.exception("Sync callback failed for %s", change.path)
 
     @staticmethod
     def _safe_compute_hash(path: Path) -> str:
@@ -162,4 +181,3 @@ class DirectorySyncManager:
             return FileSecurityGuard.compute_sha256(path)
         except (OSError, PermissionError):
             return ""
-

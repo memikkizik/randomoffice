@@ -1,8 +1,7 @@
 import time
-import pytest
 
 from randomoffice.queue.manager import JobQueueManager
-from randomoffice.queue.task import TaskPriority, TaskStatus
+from randomoffice.queue.task import TaskStatus
 
 
 def test_queue_executes_job_successfully() -> None:
@@ -76,4 +75,3 @@ def test_queue_cancellation() -> None:
         assert second.status == TaskStatus.CANCELLED
     finally:
         manager.shutdown(wait=True)
-

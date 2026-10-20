@@ -21,9 +21,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     subparsers = parser.add_subparsers(dest="subcommand", help="Available subcommands")
 
+    # 'desktop' subcommand
+    desktop_parser = subparsers.add_parser("desktop", help="Launch native desktop GUI application")
+    desktop_parser.add_argument("document", nargs="?", type=Path, help="Office document to open at startup")
+
     # 'serve' subcommand
     serve_parser = subparsers.add_parser("serve", help="Start the production FastAPI server")
-    serve_parser.add_argument("--host", default="0.0.0.0", help="Bind host (default: 0.0.0.0)")
+    serve_parser.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="Bind host (default: 127.0.0.1; use 0.0.0.0 only behind a secured proxy)",
+    )
     serve_parser.add_argument("--port", type=int, default=8000, help="Bind port (default: 8000)")
     serve_parser.add_argument("--workers", type=int, default=1, help="Uvicorn workers count")
 
@@ -67,6 +75,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     """Run the CLI and return process exit code."""
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.subcommand == "desktop":
+        from .desktop import run_desktop_app
+        if args.document is None:
+            run_desktop_app()
+        else:
+            run_desktop_app(startup_document=args.document)
+        return 0
 
     if args.subcommand == "serve":
         try:

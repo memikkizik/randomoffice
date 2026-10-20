@@ -12,9 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uv for fast, reliable dependency installation
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:$PATH"
+# Install a pinned uv release; avoid executing an unverified remote installer script.
+RUN pip install --no-cache-dir "uv==0.13.1"
 
 COPY pyproject.toml .
 RUN uv venv /opt/venv
