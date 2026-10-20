@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Zero Telemetry](https://img.shields.io/badge/Privacy-100%25%20Local%20%26%20Zero%20Telemetry-success.svg)]()
 [![Zero Firewall Prompts](https://img.shields.io/badge/security-Zero%20Socket%20%2F%20No%20Defender%20Block-brightgreen.svg)]()
-[![Tests](https://img.shields.io/badge/tests-204%20passed-success.svg)]()
+[![Tests](https://img.shields.io/badge/tests-207%20passed-success.svg)]()
 
 ---
 
@@ -104,16 +104,7 @@ Paket içindeki tüm motor, API, sözleşmeler ve gerçek tarayıcı senaryolar�
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check_project.ps1 -Scope All
 ```
-*(204 testin tamamı %100 başarıyla geçmektedir; 44 gerçek Playwright/Edge tarayıcı senaryosu dahil.)*
-
----
-
-## 📚 Dokümantasyon
-Detaylı mimari, API kılavuzu ve manuel test belgeleri için [**`docs/`**](docs/) klasörüne göz atabilirsiniz:
-- [**docs/DEVELOPMENT.md**](docs/DEVELOPMENT.md): Yerel ortam kurulumu ve derleme adımları.
-- [**docs/MANUAL_TESTS.md**](docs/MANUAL_TESTS.md): Windows masaüstü doğrulama adımları.
-- [**docs/COLLABORATION.md**](docs/COLLABORATION.md): Teknik mimari mutabakatları ve görev takibi.
-- [**docs/BACKEND_REVIEW.md**](docs/BACKEND_REVIEW.md): OpenXML motor ve bağımlılık grafiği mimarisi.
+*(207 testin tamamı %100 başarıyla geçmektedir; 44 gerçek Playwright/Edge tarayıcı senaryosu dahil.)*
 
 ---
 
