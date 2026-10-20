@@ -11,6 +11,8 @@ randomoffice.egg-info/dependency_links.txt
 randomoffice.egg-info/entry_points.txt
 randomoffice.egg-info/requires.txt
 randomoffice.egg-info/top_level.txt
+randomoffice/api/__init__.py
+randomoffice/api/app.py
 randomoffice/converters/__init__.py
 randomoffice/converters/contracts.py
 randomoffice/converters/pipeline.py
@@ -27,6 +29,7 @@ randomoffice/queue/manager.py
 randomoffice/queue/task.py
 randomoffice/sync/__init__.py
 randomoffice/sync/watcher.py
+tests/test_api.py
 tests/test_cli.py
 tests/test_common.py
 tests/test_converters.py

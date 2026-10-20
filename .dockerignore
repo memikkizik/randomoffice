@@ -1,0 +1,15 @@
+.venv
+.git
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+tests
+data
+uploads
+*.egg-info
+dist
+build
+.system_generated

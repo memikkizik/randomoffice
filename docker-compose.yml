@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  # RandomOffice Production REST API Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: randomoffice-api
+    ports:
+      - "8000:8000"
+    environment:
+      - WORKER_CONCURRENCY=4
+      - LOG_LEVEL=info
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Background Directory Watcher & Sync Worker Service
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: randomoffice-sync-worker
+    command: ["python", "-m", "randomoffice", "watch", "/data/incoming", "--target", "markdown"]
+    environment:
+      - LOG_LEVEL=info
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
