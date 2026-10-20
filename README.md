@@ -108,6 +108,15 @@ powershell -ExecutionPolicy Bypass -File scripts/check_project.ps1 -Scope All
 
 ---
 
+## 📚 Dokümantasyon
+Detaylı mimari, API kılavuzu ve manuel test belgeleri için [**`docs/`**](docs/) klasörüne göz atabilirsiniz:
+- [**docs/DEVELOPMENT.md**](docs/DEVELOPMENT.md): Yerel ortam kurulumu ve derleme adımları.
+- [**docs/MANUAL_TESTS.md**](docs/MANUAL_TESTS.md): Windows masaüstü doğrulama adımları.
+- [**docs/COLLABORATION.md**](docs/COLLABORATION.md): Teknik mimari mutabakatları ve görev takibi.
+- [**docs/BACKEND_REVIEW.md**](docs/BACKEND_REVIEW.md): OpenXML motor ve bağımlılık grafiği mimarisi.
+
+---
+
 ## 🔒 Güvenlik, Gizlilik ve Açık Kaynak Güvencesi
 - **Sıfır Telemetri & Sıfır Veri Toplama:** Belgeleriniz ve verileriniz asla dışarıdaki bir bulut sunucusuna gönderilmez. Tamamen yerel (air-gapped) mimaridedir.
 - **Gizli API veya Sızıntı Riski Yok:** Kod tabanı hiçbir gizli API anahtarı, kişisel veri veya arka kapı içermez. MIT lisansı ile halka açıktır.

@@ -101,3 +101,29 @@ def test_api_enforces_upload_limit(client: TestClient, monkeypatch: pytest.Monke
 
     assert response.status_code == 400
     assert "Upload exceeds limit" in response.json()["detail"]
+
+
+def test_docs_and_schema_are_hidden_by_default(client: TestClient) -> None:
+    # Swagger docs, ReDoc, and OpenAPI schema must be hidden from public discovery
+    assert client.get("/docs").status_code == 404
+    assert client.get("/redoc").status_code == 404
+    assert client.get("/openapi.json").status_code == 404
+
+
+def test_api_key_protection_when_configured(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("RANDOMOFFICE_API_KEY", "secret-test-key-12345")
+    # Without key -> 401 Unauthorized
+    resp_unauth = client.post(
+        "/api/v1/parse",
+        files={"file": ("test.docx", b"PK...", "application/octet-stream")},
+    )
+    assert resp_unauth.status_code == 401
+    assert "invalid or missing API key" in resp_unauth.json()["detail"]
+
+    # With X-API-Key header -> proceeds (rejects with 400 bad format, not 401)
+    resp_auth = client.post(
+        "/api/v1/parse",
+        files={"file": ("test.pdf", b"test", "application/pdf")},
+        headers={"X-API-Key": "secret-test-key-12345"},
+    )
+    assert resp_auth.status_code == 400

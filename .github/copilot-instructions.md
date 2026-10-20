@@ -1,6 +1,6 @@
 # RandomOffice: Copilot çalışma bağlamı
 
-Önce `COPILOT_TASKS.md`, `ANTIGRAVITY_COLLABORATION.md` ve `DEVELOPMENT.md`
+Önce `docs/COPILOT_TASKS.md`, `docs/COLLABORATION.md` ve `docs/DEVELOPMENT.md`
 dosyalarını okuyun. Güncel görev ayrımı, eski tarihsel notlardan önce gelir.
 Bir görevi üstlendiğinizde görev panosunda durumunu ve değiştireceğiniz dosyaları
 yazın. Başka aracın görevi aldığını veya incelemeyi tamamladığını varsaymayın.

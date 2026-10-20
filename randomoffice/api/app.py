@@ -10,7 +10,8 @@ import tempfile
 from typing import Any
 from urllib.parse import quote
 
-from fastapi import Body, FastAPI, File, Form, HTTPException, Query, UploadFile, status
+import re
+from fastapi import Body, FastAPI, File, Form, HTTPException, Query, Request, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
@@ -101,6 +102,9 @@ def create_app() -> FastAPI:
         version="0.2.0",
         description="Free, open-source web Microsoft Office alternative and document conversion platform.",
         lifespan=lifespan,
+        docs_url="/docs" if os.getenv("RANDOMOFFICE_ENABLE_DOCS", "false").lower() in ("true", "1", "yes") else None,
+        redoc_url="/redoc" if os.getenv("RANDOMOFFICE_ENABLE_DOCS", "false").lower() in ("true", "1", "yes") else None,
+        openapi_url="/openapi.json" if os.getenv("RANDOMOFFICE_ENABLE_DOCS", "false").lower() in ("true", "1", "yes") else None,
     )
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
@@ -109,13 +113,15 @@ def create_app() -> FastAPI:
         allow_origins=_allowed_origins(),
         allow_credentials=False,
         allow_methods=["GET", "POST"],
-        allow_headers=["Content-Type"],
+        allow_headers=["Content-Type", "X-API-Key", "Authorization"],
     )
 
     @app.middleware("http")
     async def add_security_headers(request, call_next):
         """Add browser isolation headers without changing document payloads."""
         response = await call_next(request)
+        if "server" in response.headers:
+            del response.headers["server"]
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
         response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
         response.headers.setdefault("Referrer-Policy", "no-referrer")
@@ -124,6 +130,19 @@ def create_app() -> FastAPI:
             "camera=(), microphone=(), geolocation=(), payment=()",
         )
         return response
+
+    def _verify_api_key(req: Request) -> None:
+        """Protect backend API endpoints when RANDOMOFFICE_API_KEY is configured."""
+        required_key = os.getenv("RANDOMOFFICE_API_KEY", "").strip()
+        if not required_key:
+            return
+        provided = req.headers.get("X-API-Key") or req.headers.get("Authorization", "").replace("Bearer ", "").strip()
+        if provided != required_key:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unauthorized: invalid or missing API key",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
 
     class HealthResponse(BaseModel):
         status: str = "healthy"
@@ -267,8 +286,9 @@ def create_app() -> FastAPI:
         )
 
     @app.post("/api/v1/parse", response_model=ParseResponse, tags=["Document Processing"])
-    async def parse_document(file: UploadFile = File(...)):
+    async def parse_document(request: Request, file: UploadFile = File(...)):
         """Directly parse an uploaded Office document into normalized text and metadata."""
+        _verify_api_key(request)
         suffix = Path(file.filename or "").suffix.lower()
         if suffix not in (SupportedFormat.DOCX, SupportedFormat.XLSX, SupportedFormat.PPTX):
             raise HTTPException(
@@ -300,10 +320,12 @@ def create_app() -> FastAPI:
 
     @app.post("/api/v1/convert", response_model=ConvertResponse, tags=["Document Processing"])
     async def convert_document(
+        request: Request,
         file: UploadFile = File(...),
         target: ConversionTarget = Form(ConversionTarget.MARKDOWN),
     ):
         """Convert an uploaded Office document into Markdown, JSON, CSV, or Text."""
+        _verify_api_key(request)
         suffix = Path(file.filename or "").suffix.lower()
         if suffix not in (SupportedFormat.DOCX, SupportedFormat.XLSX, SupportedFormat.PPTX):
             raise HTTPException(
@@ -332,8 +354,9 @@ def create_app() -> FastAPI:
                 tmp_path.unlink(missing_ok=True)
 
     @app.get("/api/v1/jobs/{job_id}", response_model=JobStatusResponse, tags=["Queue"])
-    async def get_job_status(job_id: str):
+    async def get_job_status(request: Request, job_id: str):
         """Retrieve background job status and result."""
+        _verify_api_key(request)
         assert queue_manager is not None
         job = queue_manager.get_job(job_id)
         if not job:
@@ -351,8 +374,9 @@ def create_app() -> FastAPI:
         )
 
     @app.post("/api/v1/jobs/{job_id}/cancel", tags=["Queue"])
-    async def cancel_job(job_id: str):
+    async def cancel_job(request: Request, job_id: str):
         """Cancel a pending job."""
+        _verify_api_key(request)
         assert queue_manager is not None
         cancelled = queue_manager.cancel(job_id)
         if not cancelled:
