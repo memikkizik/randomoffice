@@ -59,6 +59,31 @@ Günümüzde Microsoft Office belgelerini (`.docx`, `.xlsx`, `.pptx`) açıp üz
 
 ---
 
+## 📸 Arayüz ve Özellik Galerisi
+
+<p align="center">
+  <b>📝 Microsoft Word Modu — Zengin Metin, A4 Sayfa Düzeni ve Fluent Şerit</b><br>
+  <img src="assets/screenshots/word-editor.png" width="92%" alt="Word Düzenleyici Arayüzü" />
+</p>
+
+<p align="center">
+  <b>📊 Microsoft Excel Modu — Hücre Formülleri, Dinamik Hesaplama ve Çoklu Sayfalar</b><br>
+  <img src="assets/screenshots/excel-sheet.png" width="92%" alt="Excel Tablo ve Formül Arayüzü" />
+</p>
+
+<p align="center">
+  <b>📽️ Microsoft PowerPoint Modu — Slayt Gösterisi, Temalar ve Kart Gezintisi</b><br>
+  <img src="assets/screenshots/powerpoint-slides.png" width="92%" alt="PowerPoint Sunum Arayüzü" />
+</p>
+
+<p align="center">
+  <b>⚙️ Ayarlar & Kompakt Yerleşim — Windows Entegrasyonu ve Esnek Ekran Desteği</b><br>
+  <img src="assets/screenshots/settings-panel.png" width="46%" alt="Ayarlar Paneli" />
+  <img src="assets/screenshots/compact-layout.png" width="46%" alt="Kompakt Arayüz" />
+</p>
+
+---
+
 ## 🚀 Başlatma ve Kullanım
 
 ### 1. Masaüstü Uygulaması Olarak Çalıştırma (Önerilen)
