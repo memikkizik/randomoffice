@@ -21,3 +21,4 @@ Kabul edilemez davranışlar:
 ## Yaptırımlar
 
 Topluluk yöneticileri, bu Davranış Kurallarına uymayan yorumları, commit'leri veya PR'ları kaldırma, düzenleme veya reddetme hakkına ve sorumluluğuna sahiptir.
+

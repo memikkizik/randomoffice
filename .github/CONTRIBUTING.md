@@ -45,3 +45,4 @@ powershell -ExecutionPolicy Bypass -File scripts/check_project.ps1 -Scope All
 2. Dalınızı çatalladığınız depoya push edin: `git push origin ozellik/yeni-ozellik-adi`.
 3. GitHub üzerinden ana depoya (`memikkizik/randomoffice:main`) bir **Pull Request (PR)** açın.
 4. Otomatik CI testlerinin başarıyla tamamlandığından emin olun.
+

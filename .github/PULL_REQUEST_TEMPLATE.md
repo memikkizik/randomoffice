@@ -14,3 +14,4 @@ Bu Pull Request neyi çözüyor veya hangi yeni özelliği ekliyor?
 
 - [ ] Hiçbir gizli anahtar, telemetri veya kişisel veri eklenmemiştir.
 - [ ] Sıfır-soket masaüstü mimarisi bozulmamıştır.
+

@@ -25,3 +25,4 @@ Bir güvenlik açığı keşfettiyseniz, lütfen bunu herkese açık GitHub Issu
 - **Güvenlik Başlığı:** `[SECURITY] RandomOffice Güvenlik Bildirimi`
 
 Lütfen açığın yeniden üretilme adımlarını, etkilenen bileşeni ve potansiyel etkiyi detaylandırın. Bildiriminiz en geç 48 saat içerisinde incelenecektir.
+

@@ -25,3 +25,4 @@ body:
       description: Bu özellik nasıl çalışmalı ve kullanıcılara ne fayda sağlamalı?
     validations:
       required: true
+

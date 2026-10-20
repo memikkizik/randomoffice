@@ -1,182 +1,104 @@
-# 🏢 RandomOffice — Ücretsiz ve Halka Açık Masaüstü & Web Office Paketi
+# 🏢 RandomOffice
 
-> **Microsoft 365 veya Office abonelik ücreti ödemeden; Word (`.docx`), Excel (`.xlsx`) ve PowerPoint (`.pptx`) belgelerinizi doğrudan masaüstü uygulamasında veya web tarayıcınızda açın, düzenleyin, formülleri hesaplayın, slayt gösterisi yapın ve kaydedin!**
+> **Ücretsiz, hafif ve yerel Masaüstü & Web Office Süiti.** Word (`.docx`), Excel (`.xlsx`) ve PowerPoint (`.pptx`) belgelerini lisans ücreti ödemeden açın, düzenleyin ve kaydedin.
 
 [![CI](https://github.com/memikkizik/randomoffice/actions/workflows/ci.yml/badge.svg)](https://github.com/memikkizik/randomoffice/actions/workflows/ci.yml)
-[![Web Office Suite](https://img.shields.io/badge/Office%20Suite-Word%20%7C%20Excel%20%7C%20PowerPoint-0078d4.svg)]()
-[![Desktop Engine](https://img.shields.io/badge/Desktop-Native%20Edge%20WebView2-blue.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Zero Telemetry](https://img.shields.io/badge/Privacy-100%25%20Local%20%26%20Zero%20Telemetry-success.svg)]()
-[![Zero Firewall Prompts](https://img.shields.io/badge/security-Zero%20Socket%20%2F%20No%20Defender%20Block-brightgreen.svg)]()
 [![Tests](https://img.shields.io/badge/tests-207%20passed-success.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Zero Telemetry](https://img.shields.io/badge/Privacy-100%25%20Local-brightgreen.svg)]()
+[![Zero Socket](https://img.shields.io/badge/Security-Zero%20Socket%20%2F%20No%20Firewall-success.svg)]()
 
 ---
 
-## 📥 GitHub'dan İndirme ve Kurulum
+## 📸 Arayüz Galerisi
 
-### ZIP ile indirme
+| 📝 Word (Belge Düzenleyici) | 📊 Excel (Tablo & Formüller) |
+| :---: | :---: |
+| <img src="assets/screenshots/word-editor.png" width="100%" alt="Word Modu" /> | <img src="assets/screenshots/excel-sheet.png" width="100%" alt="Excel Modu" /> |
+| **📽️ PowerPoint (Sunum & Slaytlar)** | **⚙️ Ayarlar & Kompakt Görünüm** |
+| <img src="assets/screenshots/powerpoint-slides.png" width="100%" alt="PowerPoint Modu" /> | <img src="assets/screenshots/settings-panel.png" width="100%" alt="Ayarlar Paneli" /> |
 
-GitHub'da **Code → Download ZIP** seçeneğine tıklayın. ZIP dosyasını çıkarıp
-proje klasörünü açın.
+---
 
-### Git ile indirme
+## ⚡ Hızlı Başlangıç
 
+### 1. Masaüstü Uygulaması (Önerilen)
+Windows üzerinde konsol penceresi olmadan doğrudan çalıştırmak için:
+- 👉 **`Launch_RandomOffice.vbs`** dosyasına çift tıklayın.
+
+Veya terminal üzerinden:
 ```powershell
 git clone https://github.com/memikkizik/randomoffice.git
 cd randomoffice
-```
-
-### Gereksinimleri kurma
-
-Windows'ta **Python 3.11 veya üzeri** ve
-[uv](https://docs.astral.sh/uv/) kurulu olmalıdır:
-
-```powershell
 uv sync
+uv run randomoffice desktop
 ```
 
-Kurulumdan sonra uygulamayı [Başlatma ve Kullanım](#-başlatma-ve-kullanım)
-bölümündeki komutlarla çalıştırabilirsiniz.
-
-## 🎯 Projenin Amacı ve Vizyonu
-
-Günümüzde Microsoft Office belgelerini (`.docx`, `.xlsx`, `.pptx`) açıp üzerinde çalışmak için kullanıcılar yüksek aylık/yıllık lisans ücretlerine (Microsoft 365 vb.) zorlanmaktadır.
-
-**RandomOffice**, herkesin tamamen ücretsiz kullanabileceği halka açık, bağımsız bir **Masaüstü ve Web Office Süiti**dir:
-- ❌ **Abonelik yok, lisans anahtarı yok, hesap zorunluluğu yok.**
-- 🛡️ **Windows Defender Güvenlik Duvarı uyarısı yok:** Masaüstü modu yerel ağ portu açmadan (sıfır TCP soketi ile) doğrudan in-process çalışır; güvenlik duvarı engeline takılmaz.
-- ⚡ **Orijinal Format Desteği:** DOCX, XLSX ve PPTX dosyalarını tek tıkla açar, düzenler ve orijinal ikili formatında kaydeder.
-- 💻 **Hem Masaüstü Hem Web:** İster Windows masaüstü uygulaması olarak çift tıklayıp kullanın, ister web sunucusu olarak çalıştırın.
-
----
-
-## 💻 3 Temel Program Tek Bir Pakette
-
-| Uygulama | Desteklenen Dosya | Yapabilecekleriniz |
-| :--- | :--- | :--- |
-| **📝 Word (Belge)** | `.docx` | Zengin metin düzenleme (Kalın, İtalik, Altı Çizili, Renk Paleti, Vurgu), Başlık stilleri (H1, H2, H3), Tablo ve Resim ekleme, Yatay Cetvel, A4 baskı düzeni, Canlı sözcük/okuma süresi sayacı ve Ctrl+P yazdırma. |
-| **📊 Excel (Tablo)** | `.xlsx` | Çok sayfalı tablolar (`Sayfa1`, `Sayfa2`, `+`), formül çubuğu (`fx`), hücre koordinatları (`A1`), dinamik formül motoru (`=SUM`, `=AVERAGE`, `=MIN`, `=MAX`, `=A1+B1`), ₺ para birimi ve % yüzde formatı. |
-| **📽️ PowerPoint (Sunum)** | `.pptx` | Küçük resimli slayt kartları, yeni slayt/çoğaltma/silme, slayt temaları (Modern Beyaz, Koyu Gece, Lacivert, Zümrüt, Mercan), resim ekleme ve **F5 Tam Ekran Slayt Gösterisi Modu**. |
-
----
-
-## 📸 Arayüz ve Özellik Galerisi
-
-<p align="center">
-  <b>📝 Microsoft Word Modu — Zengin Metin, A4 Sayfa Düzeni ve Fluent Şerit</b><br>
-  <img src="assets/screenshots/word-editor.png" width="92%" alt="Word Düzenleyici Arayüzü" />
-</p>
-
-<p align="center">
-  <b>📊 Microsoft Excel Modu — Hücre Formülleri, Dinamik Hesaplama ve Çoklu Sayfalar</b><br>
-  <img src="assets/screenshots/excel-sheet.png" width="92%" alt="Excel Tablo ve Formül Arayüzü" />
-</p>
-
-<p align="center">
-  <b>📽️ Microsoft PowerPoint Modu — Slayt Gösterisi, Temalar ve Kart Gezintisi</b><br>
-  <img src="assets/screenshots/powerpoint-slides.png" width="92%" alt="PowerPoint Sunum Arayüzü" />
-</p>
-
-<p align="center">
-  <b>⚙️ Ayarlar & Kompakt Yerleşim — Windows Entegrasyonu ve Esnek Ekran Desteği</b><br>
-  <img src="assets/screenshots/settings-panel.png" width="46%" alt="Ayarlar Paneli" />
-  <img src="assets/screenshots/compact-layout.png" width="46%" alt="Kompakt Arayüz" />
-</p>
-
----
-
-## ⚖️ Karşılaştırma Tablosu (Neden RandomOffice?)
-
-| Kriter | 🏢 RandomOffice | 💼 Microsoft 365 | 🐧 LibreOffice | 🌐 Google Docs |
-| :--- | :---: | :---: | :---: | :---: |
-| **Fiyat** | **%100 Ücretsiz** | Yıllık 2.000+ ₺ | Ücretsiz | Ücretsiz |
-| **Gizlilik & Telemetri** | **Sıfır Veri Toplama** | Bulut telemetrisi | Yerel | Google bulut kaydı |
-| **Hesap / Abonelik** | **Zorunsuz** | Zorunlu | Zorunsuz | Google hesabı |
-| **Kurulum Boyutu** | **~25 MB (Tek EXE)** | 4 - 8 GB | ~550 MB | Yalnızca web |
-| **Açılış Hızı** | **Anında (WebView2)** | Ağır yükleme | Yavaş başlatma | İnternet bağımlı |
-| **Modern Fluent UI** | **Evet (Fluent 2.0)** | Evet | Eski arayüz | Basit web |
-| **Yerel Sıfır-Soket** | **Evet (Sıfır Port)** | Hayır | Hayır | Hayır |
-
----
-
-## ⌨️ Hızlı Klavye Kısayolları
-
-| Kısayol | İşlev | Geçerli Uygulama |
-| :--- | :--- | :--- |
-| <kbd>Ctrl</kbd> + <kbd>S</kbd> | Belgeyi yerinde / farklı kaydet | Tümü |
-| <kbd>Ctrl</kbd> + <kbd>P</kbd> | Canlı A4 yazdırma önizlemesi ve yazdır | Tümü |
-| <kbd>Ctrl</kbd> + <kbd>B</kbd> | Seçili metni kalın yap | Word |
-| <kbd>Ctrl</kbd> + <kbd>I</kbd> | Seçili metni italik yap | Word |
-| <kbd>Ctrl</kbd> + <kbd>U</kbd> | Seçili metnin altını çiz | Word |
-| <kbd>F5</kbd> | Baştan tam ekran slayt gösterisi başlat | PowerPoint |
-| <kbd>Esc</kbd> | Slayt gösterisinden çık | PowerPoint |
-| <kbd>→</kbd> / <kbd>←</kbd> | Sonraki / Önceki slayda geç | PowerPoint |
-| <kbd>Enter</kbd> / <kbd>Tab</kbd> | Hücre girişini onayla ve yana/aşağı kay | Excel |
-
----
-
-## 🚀 Başlatma ve Kullanım
-
-### 1. Masaüstü Uygulaması Olarak Çalıştırma (Önerilen)
-Masaüstünüzde otomatik oluşturulan **RandomOffice** kısayoluna çift tıklayabilir veya proje klasöründen şu dosyayı çalıştırabilirsiniz:
-- 👉 **`Launch_RandomOffice.vbs`** (Sessiz, konsol penceresiz, doğrudan yerel masaüstü penceresi açar)
-- Veya terminalden:
-  ```powershell
-  uv run randomoffice desktop
-  ```
-
-### 2. Web Sunucusu Olarak Çalıştırma
-Tüm yerel ağda veya tarayıcıda çalıştırmak için:
+### 2. Web Tarayıcısı Modu
 ```powershell
 uv run uvicorn randomoffice.api.app:app --host 127.0.0.1 --port 8000
 ```
-Tarayıcınızda açın:
-👉 **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+Tarayıcınızda açın: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
 ---
 
-## 🌟 Öne Çıkan Gelişmiş Özellikler
+## 🎯 3 Temel Uygulama
 
-1. **"Ne yapmak istiyorsunuz?" Akıllı Arama Çubuğu (Tell Me):**
-   - Üst çubuktaki arama kutusuna *"yazdır"*, *"tablo"*, *"resim"*, *"kaydet"*, *"kalın"* gibi herhangi bir eylem yazıp Enter'a basarak doğrudan çalıştırabilirsiniz.
-2. **Kusursuz Şerit (Ribbon) Sekmeleri:**
-   - **Giriş:** Pano, Yazı Tipi, Renk Paletleri, Paragraf Hizalamaları, Stiller.
-   - **Ekle:** Tablo, Resim, Bağlantı (Link), Sayfa Sonu, Yatay Çizgi, Tarih & Saat.
-   - **Formüller (Excel):** Toplam, Ortalama, Min, Max, Para Birimi, Satır/Sütun Ekle ve Sil.
-   - **Slayt Gösterisi (PowerPoint):** Baştan Başlat (F5), Geçerli Slayttan, Tema Seçici.
-   - **Görünüm:** Cetvel Aç/Kapat, Koyu Tuval Modu, Tam Ekran ve Yakınlaştırma (%50 - %150).
-3. **Masaüstü Dosya Köprüsü (Native Bridge):**
-   - Masaüstü modunda Windows Dosya Gezgini Açma/Kaydetme iletişim kutuları doğrudan yerel işletim sistemi arayüzüyle çalışır.
-4. **Sürükle & Bırak Desteği:**
-   - Herhangi bir `.docx`, `.xlsx` veya `.pptx` dosyasını pencerenin üzerine bırakmanız açılması için yeterlidir.
-5. **Otomatik Kaydetme:**
-   - Yazdığınız her harf yerel tarayıcı önbelleğinde saklanır; tarayıcı kapansa dahi çalışmanız kaybolmaz.
+| Uygulama | Format | Öne Çıkan Özellikler |
+| :--- | :---: | :--- |
+| **📝 Word** | `.docx` | Zengin metin biçimlendirme, başlık stilleri, tablo & resim ekleme, A4 baskı düzeni, cetvel, canlı kelime sayacı ve Ctrl+P yazdırma. |
+| **📊 Excel** | `.xlsx` | Çoklu çalışma sayfaları (`Sayfa1`, `Sayfa2`), formül çubuğu (`fx`), koordinatlar (`A1`), dinamik motor (`SUM`, `AVG`, `MIN`, `MAX`), para & yüzde formatı. |
+| **📽️ PowerPoint** | `.pptx` | Slayt kartları, slayt çoğaltma/silme, renk temaları, resim yerleştirme ve **F5 Tam Ekran Slayt Gösterisi** modu. |
+
+---
+
+## ⚖️ Neden RandomOffice?
+
+| Özellik | 🏢 RandomOffice | 💼 Microsoft 365 | 🐧 LibreOffice | 🌐 Google Docs |
+| :--- | :---: | :---: | :---: | :---: |
+| **Fiyat** | **%100 Ücretsiz** | Yıllık 2.000+ ₺ | Ücretsiz | Ücretsiz |
+| **Gizlilik** | **Sıfır Telemetri (Tamamen Yerel)** | Bulut telemetrisi | Yerel | Bulut kaydı |
+| **Hesap / Giriş** | **Gerekmez** | Zorunlu | Gerekmez | Zorunlu |
+| **Boyut & Hız** | **Hafif (~25 MB) & Hızlı (WebView2)** | 4 - 8 GB (Ağır) | ~550 MB | Web bağımlı |
+| **Güvenlik Duvarı** | **Sıfır TCP Soketi (Engellenmez)** | Standart | Standart | Web portları |
+
+---
+
+## ⌨️ Klavye Kısayolları
+
+| Kısayol | İşlev | Uygulama |
+| :--- | :--- | :--- |
+| <kbd>Ctrl</kbd> + <kbd>S</kbd> | Belgeyi yerinde / farklı kaydet | Tümü |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd> | Canlı A4 yazdırma önizlemesi ve yazdır | Tümü |
+| <kbd>Ctrl</kbd> + <kbd>B</kbd> / <kbd>I</kbd> / <kbd>U</kbd> | Kalın / İtalik / Altı Çizili | Word |
+| <kbd>F5</kbd> / <kbd>Esc</kbd> | Slayt gösterisini başlat / çık | PowerPoint |
+| <kbd>→</kbd> / <kbd>←</kbd> | Sonraki / Önceki slayt | PowerPoint |
+| <kbd>Enter</kbd> / <kbd>Tab</kbd> | Hücre girdisini onayla ve ilerle | Excel |
+
+---
+
+## 🔒 Güvenlik & Gizlilik İlkeleri
+
+- **Sıfır Telemetri:** Hiçbir veri, analitik veya belge içeriği harici sunuculara aktarılmaz. 100% hava boşluklu (air-gapped) çalışır.
+- **Sıfır Güvenlik Duvarı Engeli:** Masaüstü modu in-process WebView2 köprüsü kullanır; Defender Güvenlik Duvarı ağ uyarısı vermez.
+- **Sıfır Gizli Anahtar & Tamamen Açık Kaynak:** Kod tabanında hiçbir API gizli anahtarı, sızıntı veya özel arka kapı bulunmaz.
 
 ---
 
 ## 🧪 Testler
 
-Paket içindeki tüm motor, API, sözleşmeler ve gerçek tarayıcı senaryolarını çalıştırmak için:
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check_project.ps1 -Scope All
 ```
-*(207 testin tamamı %100 başarıyla geçmektedir; 44 gerçek Playwright/Edge tarayıcı senaryosu dahil.)*
+*Tüm 207 test (%100 başarı) motor, API ve Playwright tarayıcı senaryolarını kapsar.*
 
 ---
 
-## 🔒 Güvenlik, Gizlilik ve Açık Kaynak Güvencesi
-- **Sıfır Telemetri & Sıfır Veri Toplama:** Belgeleriniz ve verileriniz asla dışarıdaki bir bulut sunucusuna gönderilmez. Tamamen yerel (air-gapped) mimaridedir.
-- **Gizli API veya Sızıntı Riski Yok:** Kod tabanı hiçbir gizli API anahtarı, kişisel veri veya arka kapı içermez. MIT lisansı ile halka açıktır.
-- **İnternet Bağımsız:** İnternet bağlantınız olmasa bile tüm masaüstü ofis özellikleri eksiksiz çalışır.
-- **Güvenlik Duvarı Engeli Yok:** Yerel ağ dinlemesi yapmadan doğrudan in-process WebView2 motoruyla açılır.
+## 🤝 Katkıda Bulunma & Lisans
 
----
+Katkıda bulunmak ve topluluk kurallarımızı incelemek için:
 
-## 🤝 Katkıda Bulunma ve Topluluk Standartları
-
-RandomOffice topluluğuna katılmak, katkıda bulunmak ve güvenlik bildiriminde bulunmak için:
-
-- [**CONTRIBUTING.md**](CONTRIBUTING.md) — Geliştirme ortamı kurulumu ve çekme isteği (PR) kılavuzu.
-- [**SECURITY.md**](SECURITY.md) — Sorumlu ifşa güvenlik politikası ve iletişim adresi.
-- [**CODE_OF_CONDUCT.md**](CODE_OF_CONDUCT.md) — Katılımcı nezaket ve davranış kuralları.
-- [**LICENSE**](LICENSE) — Resmi MIT Açık Kaynak Lisansı.
+- [**Katkı Kılavuzu**](.github/CONTRIBUTING.md)
+- [**Güvenlik Politikası**](.github/SECURITY.md)
+- [**Davranış Kuralları**](.github/CODE_OF_CONDUCT.md)
+- [**MIT Lisansı**](LICENSE)
